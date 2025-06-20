@@ -1,0 +1,40 @@
+.fontsize{
+    font-size: 14px;
+}
+
+.fontsize1{
+    font-size: 11px;
+    color: red;
+}
+
+.fontsize2{
+    font-size: 7px;
+}
+
+.width1{
+    width: 350px;
+}
+
+.fontpercentage{
+    font-size: 14px;
+}
+
+.width{
+    width: 50%;
+}
+
+.fontsized{
+    font-size: 18px;
+}
+
+.widthx{
+    width: 50%;
+}
+
+.fontsizex{
+    font-size: 12px;
+}
+
+.widthx{
+    width: 99.1%;
+}

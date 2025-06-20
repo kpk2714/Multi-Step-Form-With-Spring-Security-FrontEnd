@@ -1,0 +1,172 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+<app-candidate-nav></app-candidate-nav>
+<div class="ml-5 mr-5 mb-7 border-2 border-gray-100 rounded-md h-auto">
+    <div class="mt-2 mb-2 ml-7 border-2 border-gray-200 rounded-md h-9 width pt-1 pl-3">
+        <div class="flex">
+            <h3 class="text-gray-400 fontsize">Registration Form Completeness</h3>
+            <div class="h-4 w-96 bg-white border-2 rounded-md ml-10 mt-1">
+                <div class="h-3 bg-green-500 rounded-md" [ngStyle]="{ 'width.%' : widthSum}"></div>
+            </div>
+            <h3 class="fontpercentage font-semibold ml-3 text-green-500">{{widthSum}}%</h3>
+        </div>
+        <!-- <mat-progress-bar mode="determinate" [value]="percentagevalue"></mat-progress-bar> -->
+    </div>
+
+    <div class="h-10 bg-blue-100 flex justify-between">
+        <h3 class="fontsize text-black font-semibold pl-5 pt-2">Previous Work Experience(It is not mandatory to be filled . Please fill only if applicable)</h3>
+        <button type="button" (click)="AddWork()" class="{{showButton}} h-8 w-36 fontsize font-semibold mt-1 mr-7 bg-blue-900 text-white rounded-md">Add Work Experience</button>
+    </div>
+
+    <div class="{{showWorkExperience}} border-2 border-gray-200 m-7">
+        <table>
+            <tr class="bg-blue-50">
+                <th class="fontsize font-semibold py-2 px-3 w-auto">S.No</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64">Name of Company</th>
+                <th class="fontsize font-semibold py-2 px-3 w-48">Industry Type</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64">Position Held</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64">Job Profile</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">Gross Salary</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">From Date</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">End Date</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">Delete</th>
+            </tr>
+            <tr *ngFor="let company of companyData,index as i">
+                <th class="fontsize font-semibold py-2 px-3 w-auto">{{i+1}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-96">{{company.companyname}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-48">{{company.companytype}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64">{{company.position}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64">{{company.profile}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">{{company.salary}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">{{company.fromdate}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">{{company.enddate}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32"><i class="bi bi-trash text-red-700 cursor-pointer" (click)="openWorkModal()"></i></th>
+
+                <app-confirm
+                    [title]="'Confirmation'"
+                    [message]="'Are you want to delete Experience Details ?'"
+                    [isVisible]="showWorkModal"
+                    (confirm)="onConfirmWork($event, company.companyId)"
+                ></app-confirm>
+            </tr>
+        </table>
+    </div>
+
+
+    <form #workexperienceform="ngForm" (ngSubmit)="storeWorkExperienceForm(workexperienceform)">
+
+        <div class="{{showCompany}} w-full">
+
+            <div class="h-10 bg-blue-100 mt-10 mb-3">
+                <h3 class="fontsize text-black font-semibold pl-5 pt-2">Company Details</h3>
+            </div>
+
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Name of Company</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="companyname" type="text" required  placeholder="Ex - Tata Consultancy Service" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="work.companyname" #companyname="ngModel">
+                        <div *ngIf="companyname.invalid && (companyname.dirty || companyname.touched)">
+                            <div *ngIf="companyname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+        
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Industry Type</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="companytype" required placeholder="Ex - IT Service" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="work.companytype" #companytype="ngModel">
+                        <div *ngIf="companytype.invalid && (companytype.dirty || companytype.touched)">
+                            <div *ngIf="companytype.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Position Held</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="position" type="text" required placeholder="Ex - Senior Quality Engineer" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="work.position" #position="ngModel">
+                            <div *ngIf="position.invalid && (position.dirty || position.touched)">
+                                <div *ngIf="position.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Job Profile</label>
+                            </div>
+                            <input name="profile" type="text" placeholder="Ex - Quality Engineering (QA)" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="work.profile" #profile="ngModel">
+                            <div *ngIf="profile.invalid && (profile.dirty || profile.touched)">
+                                <div *ngIf="profile.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Gross Salary<small>(CTC - 4LPA)</small></label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="salary" type="text" required placeholder="Ex - 10LPA" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="work.salary" #salary="ngModel">
+                            <div *ngIf="salary.invalid && (salary.dirty || salary.touched)">
+                                <div *ngIf="salary.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">From Date</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="fromdate" type="text" required placeholder="dd/mm/yyyy" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="work.fromdate" #fromdate="ngModel">
+                            <div *ngIf="fromdate.invalid && (fromdate.dirty || fromdate.touched)">
+                                <div *ngIf="fromdate.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">End Date</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="enddate" type="text" required placeholder="dd/mm/yyyy" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="work.enddate" #enddate="ngModel">
+                            <div *ngIf="enddate.invalid && (enddate.dirty || enddate.touched)">
+                                <div *ngIf="enddate.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div [ngClass]="{'mt-10 mb-10 flex ml-96 mr-96' : errorMessage!=null}" *ngIf="errorMessage!=null">
+            <p class="text-red-700 font-bold ml-64">{{errorMessage}}</p>
+        </div>
+
+        <div [ngClass]="{'mt-10 mb-10 flex ml-96 mr-96' : successMessage!=null}" *ngIf="successMessage!=null">
+            <p class="text-green-700 font-bold ml-64">{{successMessage}}</p>
+        </div> -->
+
+        <div class="{{showSaveCancelButton}}">
+            <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <button [disabled]="workexperienceform.form.invalid" type="submit" class="bg-blue-900 w-14 h-7 text-center font-semibold text-white fontsize rounded-md ml-64">Save</button>
+                <button type="button" (click)="resetWorkExperienceForm(workexperienceform)" class="w-16 h-7 text-center text-blue-900 fontsize font-semibold rounded-md border-2 border-blue-900 ml-16">Cancel</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

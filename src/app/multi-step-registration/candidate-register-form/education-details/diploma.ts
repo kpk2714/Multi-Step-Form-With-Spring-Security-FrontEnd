@@ -1,0 +1,39 @@
+export class Diploma {
+    
+    diploma : String | undefined;
+    diplomadegree : String | undefined;
+    diplomaduration : String | undefined;
+    diplomastartdate : String | undefined;
+    diplomaenddate : String | undefined;
+    diplomaschool : String | undefined;
+    diplomaboard : String | undefined;
+    diplomabranch : String | undefined;
+    diplomacgpa : String | undefined;
+    diplomapercentage : String | undefined;
+    diplomaschoolstate : String | undefined;
+    diplomaschoolcity : String | undefined;
+    diplomasemester1sgpa : String | undefined;
+    diplomasemester1cgpa : String | undefined;
+    diplomasemester1backlog : String | undefined;
+    diplomasemester1percentage : String | undefined;
+    diplomasemester2sgpa : String | undefined;
+    diplomasemester2cgpa : String | undefined;
+    diplomasemester2backlog : String | undefined;
+    diplomasemester2percentage : String | undefined;
+    diplomasemester3sgpa : String | undefined;
+    diplomasemester3cgpa : String | undefined;
+    diplomasemester3backlog : String | undefined;
+    diplomasemester3percentage : String | undefined;
+    diplomasemester4sgpa : String | undefined;
+    diplomasemester4cgpa : String | undefined;
+    diplomasemester4backlog : String | undefined;
+    diplomasemester4percentage : String | undefined;
+    diplomasemester5sgpa : String | undefined;
+    diplomasemester5cgpa : String | undefined;
+    diplomasemester5backlog : String | undefined;
+    diplomasemester5percentage : String | undefined;
+    diplomasemester6sgpa : String | undefined;
+    diplomasemester6cgpa : String | undefined;
+    diplomasemester6backlog : String | undefined;
+    diplomasemester6percentage : String | undefined;
+}

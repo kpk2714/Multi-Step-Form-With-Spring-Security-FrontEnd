@@ -1,0 +1,19 @@
+.midBox{
+    background: #002A61 0% 0% no-repeat padding-box;
+    opacity: 0.87;
+    opacity: 0.87;
+    width: 75%;
+    padding: 10%;
+    left: 11%;
+    position: relative;
+    top: 14%;
+    height: 75vh;
+}
+
+.midText{
+    color: white;
+    font: italic normal normal 60px/98px 'SourceSansPro-Regular';
+    line-height: 1.6;
+    text-align: left;
+    margin-top: 10%;
+}

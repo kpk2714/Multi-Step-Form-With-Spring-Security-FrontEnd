@@ -1,0 +1,80 @@
+<!-- <a  routerLink="/pages/home" routerLinkActive="active" class="{{loginHidden}}">login works!</a> -->
+<div class="w-full flex">
+    <div class="w-6/12" id="setBack">
+        <app-front></app-front>
+    </div>
+    <div class="w-6/12 ml-24 mt-24">
+        <div class="">
+            <div class="flex">
+                <img src="../../assets/images/logo.png" class="w-10">
+                <p class="font-bold text-blue-900 fontText ml-5">SYN Portal</p>
+            </div>
+            <div>
+                <h1 class="fontText font-semibold text-blue-900">SYN Team Welcomes You!</h1>
+            </div>
+        </div>
+        <div class="text-gray-400 mt-7 mb-7">
+            <p>Your Username details have been shared in the Offer Letter e-mail.</p>
+        </div>
+        <div>
+            <div>
+                <p class="font-bold fontinput flex">Username
+                    <img src="assets/images/asteric.png" class="w-1.5 h-1.5">
+                </p>
+                <input type="text" name="username" required placeholder="Enter Your Username" class="border-2 w-8/12 pl-3 mt-2 h-9 rounded-md border-blue-800" [(ngModel)]="user.username" #username="ngModel">
+                <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                    <div *ngIf="username.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <p class="font-bold fontinput flex">Password
+                    <img src="assets/images/asteric.png" class="w-1.5 h-1.5">
+                </p>
+                <input type="password" name="password" required minlength="8" placeholder="Enter Your Password" class="border-2 w-8/12 pl-3 mt-2 h-9 rounded-md border-blue-800" [(ngModel)]="user.password" #password="ngModel">
+                <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                    <div *ngIf="password.errors?.['minlength']" class="text-red-500 fontsize font-semibold">Enter Correct Password Length !!!</div>
+                </div>
+            </div>
+            <div class="flex mt-3">
+                <input type="checkbox" name="rememberMe" [(ngModel)]="user.rememberMe" #rememberMe="ngModel">
+                <p class="ml-1">Remember Me</p>
+            </div>
+            <div class="flex mt-3">
+                <p class="text-red-500 fontsize font-semibold">{{errorData}}</p>
+            </div>
+        </div>
+        <div class="bg-blue-900 text-white text-center rounded-md h-9 w-8/12 pt-1 mt-5">
+            <button type="submit" (click)="loginUser()" [disabled]="username.invalid || password.invalid">Sign in</button>
+        </div>
+        <div class="mt-5 flex items-center my-4 w-8/12">
+            <div class="flex-grow border-t border-gray-300"></div>
+            <span class="mx-4 text-gray-400 text-sm">or sign in with</span>
+            <div class="flex-grow border-t border-gray-300"></div>
+        </div>
+        <div class="flex">
+            <div>
+                <button class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
+                    <i class="bi bi-google ml-6"></i>
+                    <p class="ml-2">Google</p>
+                </button>
+            </div>
+            <div class="ml-12">
+                <button class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
+                    <i class="bi bi-github ml-6"></i>
+                    <p class="ml-2">GitHub</p>
+                </button>
+            </div>
+            <div class="ml-12 cursor-pointer">
+                <a (click)="navigateToSSO()" class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
+                    <i class="bi bi-key-fill ml-8"></i>
+                    <p class="ml-2">SSO</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

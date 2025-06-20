@@ -1,0 +1,8 @@
+<div class="h-11 flex text-black border-y-gray-400">
+    <h3 (click)="navigateToHome()" class="w-28 text-center pt-2 cursor-pointer" [ngClass]="{'text-orange-400 bg-red-50 font-bold' : routeVar==='home'}">Home</h3>
+    <h3 (click)="navigateToRegistration()" class="w-64 text-center pt-2 cursor-pointer" [ngClass]="{'text-orange-400 bg-red-50 font-bold' : candidateVar==='candidate-register'}">Candidate Registration Form</h3>
+    <a (click)="navigateToHelpdesk()" class="w-44 text-center pt-2 cursor-pointer" [ngClass]="{'text-orange-400 bg-red-50 font-bold' : routeVar==='helpdesk'}">Trainee HelpDesk</a>
+</div>
+<div class="h-1 bg-gray-200"></div>
+
+<router-outlet></router-outlet>

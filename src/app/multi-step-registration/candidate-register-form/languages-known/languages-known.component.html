@@ -1,0 +1,159 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+<app-candidate-nav></app-candidate-nav>
+<div class="ml-5 mr-5 mb-7 border-2 border-gray-100 rounded-md h-auto">
+    <div class="mt-2 mb-2 ml-7 border-2 border-gray-200 rounded-md h-9 width pt-1 pl-3">
+        <div class="flex">
+            <h3 class="text-gray-400 fontsize">Registration Form Completeness</h3>
+            <div class="h-4 w-96 bg-white border-2 rounded-md ml-10 mt-1">
+                <div class="h-3 bg-green-500 rounded-md" [ngStyle]="{ 'width.%' : widthSum}"></div>
+            </div>
+            <h3 class="fontpercentage font-semibold ml-3 text-green-500">{{widthSum}}%</h3>
+        </div>
+        <!-- <mat-progress-bar mode="determinate" [value]="percentagevalue"></mat-progress-bar> -->
+    </div>
+
+    <div class="h-10 bg-blue-100 flex justify-between">
+        <h3 class="fontsize text-black font-semibold pl-5 pt-2">Add Language</h3>
+        <button type="button" (click)="AddLanguage()" class="{{showButton}} h-8 w-24 fontsize font-semibold mt-1 mr-7 bg-blue-900 text-white rounded-md">Add Language</button>
+    </div>
+
+    <div class="{{showAllLanguages}} border-2 border-gray-200 m-7">
+        <table>
+            <tr class="bg-blue-50">
+                <th class="fontsize font-semibold py-2 px-3 w-auto">S.No</th>
+                <th class="fontsize font-semibold py-2 px-3 w-96">Language Type</th>
+                <th class="fontsize font-semibold py-2 px-3 w-96">Language Code</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">Read</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">Write</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">Speak</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64">Delete</th>
+            </tr>
+            <tr *ngFor="let language of languageData,index as i">
+                <th class="fontsize font-semibold py-2 px-3 w-auto">{{i+1}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-96">{{language.languageType}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-96">{{language.languageCode}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">{{language.isRead}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">{{language.isWrite}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-32">{{language.isSpeak}}</th>
+                <th class="fontsize font-semibold py-2 px-3 w-64"><i class="bi bi-trash text-red-700 cursor-pointer" (click)="openLanguageModal()"></i></th>
+
+                <app-confirm
+                    [title]="'Confirmation'"
+                    [message]="'Are you want to delete Language ?'"
+                    [isVisible]="showLanguageModal"
+                    (confirm)="onConfirmLanguage($event, language.languageId)"
+                ></app-confirm>
+            </tr>
+        </table>
+    </div>
+
+
+    <form #languageform="ngForm" (ngSubmit)="storeLanguageForm(languageform)">
+
+        <div class="{{showLanguage}} w-full">
+
+            <div class="h-10 bg-blue-100 mt-10 mb-3">
+                <h3 class="fontsize text-black font-semibold pl-5 pt-2">Languages Known</h3>
+            </div>
+
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Language Type</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <select name="languageType" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="language.languageType" #languageType="ngModel">
+                            <option class="fontsize font-semibold">Mother Tongue</option>
+                            <option class="fontsize font-semibold">Other Tongue</option>
+                        </select>
+                        <div *ngIf="languageType.invalid && (languageType.dirty || languageType.touched)">
+                            <div *ngIf="languageType.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>                        </div>
+                    </div>
+        
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Language Code</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="languageCode" type="text" required placeholder="Ex - Bengali" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="language.languageCode" #languageCode="ngModel">
+                        <div *ngIf="languageCode.invalid && (languageCode.dirty || languageCode.touched)">
+                            <div *ngIf="languageCode.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Read</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="Read" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="language.isRead" #Read="ngModel">
+                                <option class="fontsize font-semibold">True</option>
+                                <option class="fontsize font-semibold">False</option>
+                            </select>
+                            <div *ngIf="Read.invalid && (Read.dirty || Read.touched)">
+                                <div *ngIf="Read.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Write</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="Write" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="language.isWrite" #Write="ngModel">
+                                <option class="fontsize font-semibold">True</option>
+                                <option class="fontsize font-semibold">False</option>
+                            </select>
+                            <div *ngIf="Write.invalid && (Write.dirty || Write.touched)">
+                                <div *ngIf="Write.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Speak</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="Speak" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="language.isSpeak" #Speak="ngModel">
+                                <option class="fontsize font-semibold">True</option>
+                                <option class="fontsize font-semibold">False</option>
+                            </select>
+                            <div *ngIf="Speak.invalid && (Speak.dirty || Speak.touched)">
+                                <div *ngIf="Speak.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- <div [ngClass]="{'mt-10 mb-10 flex ml-96 mr-96' : errorMessage!=null}" *ngIf="errorMessage!=null">
+            <p class="text-red-700 font-bold ml-64">{{errorMessage}}</p>
+        </div>
+
+        <div [ngClass]="{'mt-10 mb-10 flex ml-96 mr-96' : successMessage!=null}" *ngIf="successMessage!=null">
+            <p class="text-green-700 font-bold ml-64">{{successMessage}}</p>
+        </div> -->
+
+        <div class="{{showSaveCancelButton}}">
+            <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <button [disabled]="languageform.form.invalid" type="submit" class="bg-blue-900 w-14 h-7 text-center font-semibold text-white fontsize rounded-md ml-64">Save</button>
+                <button type="button" (click)="resetLanguageForm(languageform)" class="w-16 h-7 text-center text-blue-900 fontsize font-semibold rounded-md border-2 border-blue-900 ml-16">Cancel</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>
+

@@ -1,0 +1,46 @@
+<div class="w-full flex">
+    <div class="w-6/12" id="setBack">
+        <app-front></app-front>
+    </div>
+    <div class="w-6/12 mt-8">
+        <div class="ml-40">
+            <div class="mt-10">
+                <h1 class="font-semibold sso-text font-serif">Bind Google Authenticator</h1>
+            </div>
+            <div class="mt-10 flex ml-10">
+                <i class="bi bi-circle-fill text-blue-700"></i>
+                <p class="sso-p-text ml-4 font-semibold">Copy the set-up key or scan the QR code below</p>
+            </div>
+            <div class="mt-5 ml-10">
+                <p class="text-gray-400 font-semibold">Set-Up Key</p>
+                <div class="w-96 h-8 rounded-xl bg-gray-100 mt-2 flex justify-between">
+                    <p class="pl-3 pt-1" #secretRef>{{secretKey}}</p>
+                    <div class="mt-2 pr-3 cursor-pointer" (click)="copyToClipboard(secretRef.textContent)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 ml-10">
+                <p class="text-gray-400 font-semibold">QR Code</p>
+            </div>
+            <div class="mt-5 ml-10 w-40 h-40">
+                <img *ngIf="imageSrc" [src]="imageSrc" alt="Dynamic Image" />
+            </div>
+            <div class="mt-5 ml-10 flex">
+                <i class="bi bi-circle-fill text-blue-700"></i>
+                <p class="ml-4 w-96">Open Google Authenticator, click on the "+" in the bottom right corner, and add
+                    your identity authenticator with set-up key you just copied or scanned the QR Code.
+                </p>
+            </div>
+            <div class="mt-5 ml-10">
+                <button type="button" class="rounded-lg bg-blue-700 text-white w-96 h-10 font-semibold" (click)="navigateToVerifyAuthOTP()">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

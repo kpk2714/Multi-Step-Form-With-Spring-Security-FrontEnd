@@ -1,0 +1,45 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+
+<div class="border-2 mt-5 ml-5 mr-5 helpheight shadow-lg">
+    <div class="bg-blue-100 h-12 pt-3 pl-3 font-semibold">Trainee Help Desk</div>
+    <div class="bg-gray-100 h-9 pl-3 pt-1 font-semibold flex">
+        <p class="cursor-pointer {{viewRequestColor}} {{viewRequestFont}}"  (click)="viewRequest()">View Report</p>
+    </div>
+
+    <div class="{{viewRequestVar}}">
+
+        <div class="border-2 m-3 fontHelp font-semibold">
+            <div class="flex w-full bg-blue-50 p-2">
+                <p class="w-2/12">RequestID</p>
+                <p class="w-5/12">Description</p>
+                <p class="w-2/12">Created Date</p>
+                <p class="w-2/12">Status</p>
+                <p class="w-1/12">Action</p>
+            </div>
+            <div class="flex w-full p-2" [ngClass]="{'bg-gray-50' : count%2==0}">
+                <p class="w-2/12 text-blue-700">{{query.id}}</p>
+                <p class="w-5/12">{{query.description}}</p>
+                <p class="w-2/12">{{query.queryDate}}</p>
+                <p class="w-2/12">{{query.status}}</p>
+                <p class="w-1/12">{{query.action}}</p>
+            </div>
+
+            <div class="flex w-full p-2 cursor-pointer" *ngIf="reply!=null">
+                <p class="w-2/12 text-blue-700">{{reply.id}}</p>
+                <p class="w-5/12">{{reply.description}}</p>
+                <p class="w-2/12">{{reply.date}}</p>
+                <p class="w-2/12"></p>
+                <p class="w-1/12"></p>
+            </div>
+
+            <div class="flex w-full p-2 cursor-pointer" *ngIf="reply==null">
+                <p class="w-2/12 text-blue-700"></p>
+                <p class="w-5/12">After 24 hours of submitting query you will get reply</p>
+                <p class="w-2/12"></p>
+                <p class="w-2/12"></p>
+                <p class="w-1/12"></p>
+            </div>
+        </div>
+    </div>
+</div>

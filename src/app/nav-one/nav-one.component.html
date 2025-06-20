@@ -1,0 +1,18 @@
+<div class="bg-blue-900 h-11 flex pt-2 text-white">
+    <img src="../assets/images/logo.png" class="h-7 w-7 ml-7">
+    <h3 class="font-bold ml-2">SYN</h3>
+    <h2 class="font-bold float-right ml-auto">Welcome , {{name}}</h2>
+    <!-- <h2 class="font-bold float-right ml-7">Help</h2> -->
+    <p (click)="openModal()"><i class="bi bi-box-arrow-left mr-7 ml-7 cursor-pointer"></i></p>
+</div>
+<div class="h-1 bg-orange-500"></div>
+
+<app-confirm
+  [title]="'Confirmation'"
+  [message]="'Are you sure you want to Logout?'"
+  [isVisible]="showModal"
+  (confirm)="onConfirm($event)"
+></app-confirm>
+
+
+<!-- routerLink="/login" [queryParams]="{logout : true}" -->

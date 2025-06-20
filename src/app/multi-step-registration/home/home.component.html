@@ -1,0 +1,342 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+<div class="flex">
+    <div class="flex h-28  mt-7 ml-10 mr-10 rounded-lg bg-gray-200 w-8/12 shadow-md">
+        <div class="flex justify-items-end w-full">
+            <div class="w-10/12 ml-10 text-blue-800">
+                <div>
+                    <h1 class="fonthome mt-5">Hi , {{personal?.firstname}} {{personal?.middlename}} {{personal?.lastname}}</h1>
+                </div>
+                <div class="mt-5">
+                    <h2 class="fontstatus mt-1 font-semibold" *ngIf="time>=5 && time<13">Good Morning</h2>
+                    <h2 *ngIf="time>=13 && time<18">Good AfterNoon</h2>
+                    <h2 *ngIf="time>=18 && time<20">Good Evening</h2>
+                    <h2 *ngIf="time>=20 && time<24">Good Night</h2>
+                    <h2 *ngIf="time>=0 && time<5">Sleepy Night</h2>
+                </div>
+            </div>
+            <div class="w-2/12 ml-10">
+                <img class="h-36 pb-3" src="./assets/images/home.png">
+            </div>
+        </div>
+    </div>
+    <div class="w-3/12 border-2 h-28 mt-7 ml-20 mr-10 rounded-md shadow-md">
+        <div class="mt-2 ml-5">
+            <h1 class="fontForm font-semibold text-blue-800"> Registration Form Completeness</h1>
+        </div>
+        <div class="flex ml-5 mr-7 mt-10">
+            <div class="w-64 h-3 border-2 rounded-md mt-1">
+                <div class="h-2 bg-green-500 rounded-lg" [ngStyle]="{ 'width.%' : widthSum}"></div>
+            </div>
+            <div class="ml-5 pb-5">
+                <h6 class="text-green-500 font-semibold">{{widthSum}}%</h6>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="flex homesubheight mt-12">
+    <div class="ml-10 mr-10 rounded-md w-8/12 shadow-md h-full">
+        <div class="bg-orange-400 h-12 w-full rounded-t-md flex pt-2">
+            <i class="bi bi-r-square-fill text-white ml-10"></i>
+            <h1 class="fontForm font-semibold text-white ml-10">Registration Form Status</h1>
+        </div>
+
+        <div class="flex h-12 mt-5 ml-10">
+            <div class="font-semibold">
+                <h1 class="cursor-pointer" [ngClass]="{'text-blue-800 font-bold' : pendingFormDesign==='true'}" (click)="pendingFormStatus()">Pending Form(s)</h1>
+                <div [ngClass]="{'borderWidth border-blue-800 mt-2 ' : pendingFormDesign==='true'}"></div>
+            </div>
+            <div class="ml-10 font-semibold">
+                <h1 class="cursor-pointer" [ngClass]="{'text-blue-800 font-bold' : activeFormDesign==='true'}" (click)="activeFormStatus()">Completed Form(s)</h1>
+                <div [ngClass]="{'borderWidth border-blue-800 mt-2 ' : activeFormDesign==='true'}"></div>
+            </div>
+        </div>
+
+        <div class="h-48 {{pendingForm}}">
+            <div *ngIf="widthSum<100" class="h-9 widthTable bg-blue-50 flex text-center">
+                <!-- <p class="w-48 pt-1.5 font-semibold">S.No</p> -->
+                <p class="w-full pt-1.5 font-semibold">Documents Category</p>
+            </div>
+
+
+            <div class="w-full widthTable text-center">
+                <div class="flex h-9" *ngIf="personal==null">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Personal Details</h1>
+                </div>
+                <div class="flex h-9" *ngIf="educationData==null">
+                    <!-- <p class="w-48 pt-1.5 font-semibold">2</p> -->
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Education Details</h1>
+                </div>
+                <div class="flex h-9" *ngIf="familyData==null">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Family Details</h1>
+                </div>
+                <div class="flex h-9" *ngIf="companyData?.length==0">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Work Experience</h1>
+                </div>
+                <div class="flex h-9" *ngIf="technicalData?.length==0">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+                <div class="flex h-9" *ngIf="languageData?.length==0">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex h-9" *ngIf="isComplete==false">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+                <!-- <div class="flex h-9">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div> -->
+            </div>
+
+            
+
+            <!-- <div *ngIf="width<28 && width>=14" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Education Details</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">2</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Family Details</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">3</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Work Experience</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">4</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">5</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">6</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div>
+
+            <div *ngIf="width<42 && width>=28" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Family Details</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">2</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Work Experience</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">3</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">4</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">5</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div>
+
+            <div *ngIf="width<56 && width>=42" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Work Experience</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">2</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">3</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">4</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div>
+
+            <div *ngIf="width<70 && width>=56" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">2</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">3</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div>
+
+            <div *ngIf="width<84 && width>=70" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">2</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div>
+
+            <div *ngIf="width<100 && width>=84" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div> -->
+
+            <div *ngIf="widthSum==100" class="font-semibold ml-10">
+                <h1>No Pending Forms available</h1>
+            </div>
+        </div>
+
+        <div class="h-48 {{activeForm}}">
+
+            <div *ngIf="widthSum==0" class="font-semibold ml-10">
+                <h1>No Completed Forms available</h1>
+            </div>
+
+            <div *ngIf="widthSum>0" class="h-9 widthTable bg-blue-50 flex text-center">
+                <!-- <p class="w-48 pt-1.5 font-semibold">SL No.</p> -->
+                <p class="w-full pt-1.5 font-semibold">Documents Category</p>
+            </div>
+
+            <div *ngIf="personal!=null" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <!-- <p class="w-48 pt-1.5 font-semibold"></p> -->
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Personal Details</h1>
+                </div>
+            </div>
+
+
+            <div *ngIf="educationData!=null" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Education Details</h1>
+                </div>
+            </div>
+
+            <div *ngIf="familyData!=null" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Family Details</h1>
+                </div>
+            </div>
+
+            <div *ngIf="companyData?.length!=0" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Work Experience</h1>
+                </div>
+            </div>
+
+            <div *ngIf="technicalData?.length!=0" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+            </div>
+
+            <div *ngIf="languageData?.length!=0" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <!-- <p class="w-48 pt-1.5 font-semibold"></p> -->
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+            </div>
+
+            <div class="w-full widthTable text-center">
+                <div class="flex h-9" *ngIf="isComplete">
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div>
+
+            <!-- <div *ngIf="width==100" class="w-full widthTable text-center">
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">1</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Personal Details</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">2</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Education Details</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">3</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Family Details</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">4</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Work Experience</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">5</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Technical Skills</h1>
+                </div>
+                <div class="flex bg-gray-100 h-9">
+                    <p class="w-48 pt-1.5 font-semibold">6</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Languages Known</h1>
+                </div>
+                <div class="flex h-9">
+                    <p class="w-48 pt-1.5 font-semibold">7</p>
+                    <h1 class="w-full pt-1.5 font-semibold text-blue-500">Documents Upload</h1>
+                </div>
+            </div> -->
+
+        </div>
+
+        <!-- <div class="h-16 ml-10 {{optionalSpace}}" *ngIf="width>=14">
+
+        </div> -->
+        
+        <div class="borderWidth bg-gray-500 mt-2">
+ 
+        </div>
+    </div>
+    <div class="w-3/12 ml-20 mr-10 rounded-md shadow-md">
+        <div class="rounded-md bg-orange-400 h-12 pt-2">
+            <h1 class="fontForm font-semibold text-white ml-28"> Latest Notification</h1>
+        </div>
+        <div class="mt-3 ml-10 mr-10">
+            <div class="flex">
+                <i class="bi bi-dot fonthome"></i>
+                <h1 class="ml-3 mt-2 fontNotification">Welcome to SYN Portal!</h1>
+            </div>
+            <div class="border-gray-200 border-2">
+
+            </div>
+        </div>
+        <div class="mt-3 ml-10 mr-10">
+            <div class="flex">
+                <i class="bi bi-dot fonthome"></i>
+                <h1 class="ml-3 mt-2 fontNotification">This new version of SYN Portal aims at<br>delivering an exelent user experience</h1>
+            </div>
+            <div class="border-gray-200 border-2 mt-1">
+
+            </div>
+        </div>
+        <div class="mt-3 ml-10 mr-10">
+            <div class="flex">
+                <i class="bi bi-dot fonthome"></i>
+                <h1 class="ml-3 mt-2 fontNotification">Please update all your pending<br>ionformation/documents in the respective
+                    forms and verify if all details have been submitted.</h1>
+            </div>
+            <div class="border-gray-200 border-2 mt-1">
+
+            </div>
+        </div>
+        <div class="mt-3 ml-10 mr-10">
+            <div class="flex">
+                <i class="bi bi-dot fonthome"></i>
+                <h1 class="ml-3 mt-2 fontNotification">In case of any queries,please reach out<br>through the 'Trainee Helpdesk' section on
+                    the portal</h1>
+            </div>
+            <div class="border-gray-200 border-2 mt-1">
+
+            </div>
+        </div>
+    </div>
+</div>

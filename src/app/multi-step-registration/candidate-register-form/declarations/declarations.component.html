@@ -1,0 +1,118 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+<app-candidate-nav></app-candidate-nav>
+<div class="ml-5 mr-5 mb-7 border-2 border-gray-100 rounded-md h-auto">
+    <div class="mt-2 mb-2 ml-7 border-2 border-gray-200 rounded-md h-9 width pt-1 pl-3">
+        <div class="flex">
+            <h3 class="text-gray-400 fontsize">Registration Form Completeness</h3>
+            <div class="h-4 w-96 bg-white border-2 rounded-md ml-10 mt-1">
+                <div class="h-3 bg-green-500 rounded-md" [ngStyle]="{ 'width.%' : widthSum}"></div>
+            </div>
+            <h3 class="fontpercentage font-semibold ml-3 text-green-500">{{widthSum}}%</h3>
+        </div>
+        <!-- <mat-progress-bar mode="determinate" [value]="percentagevalue"></mat-progress-bar> -->
+    </div>
+
+    <div class="h-10 bg-blue-100 flex justify-between">
+        <h3 class="fontsize text-black font-semibold pl-5 pt-2">Review and Submit</h3>
+    </div>
+
+    <div class="mt-2 mb-2 ml-7 mr-7 border-2 border-gray-200 rounded-md h-64 pt-1 pl-3">
+        <div>
+            <h1 class="fontsized font-bold">Summary</h1>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Personal Details</p>
+            <p style="color:green" *ngIf="personal!=null;else personalelse" class="font-bold">Completed</p>
+            <ng-template #personalelse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Educational Details</p>
+            <p style="color:green" *ngIf="educationData!=null;else educationalelse" class="font-bold">Completed</p>
+            <ng-template #educationalelse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Family Details</p>
+            <p style="color:green" *ngIf="familyData!=null;else familyelse" class="font-bold">Completed</p>
+            <ng-template #familyelse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Work Experience</p>
+            <p style="color:green" *ngIf="companyData.length>0;else workelse" class="font-bold">Completed</p>
+            <ng-template #workelse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Technical Skills</p>
+            <p style="color:green" *ngIf="technicalData.length>0;else skillElse" class="font-bold">Completed</p>
+            <ng-template #skillElse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Language Known</p>
+            <p style="color:green" *ngIf="languageData.length>0;else languageElse" class="font-bold">Completed</p>
+            <ng-template #languageElse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p class="w-64">Documents Upload</p>
+            <p style="color:green" *ngIf="isComplete==true;else documentselse" class="font-bold">Completed</p>
+            <ng-template #documentselse>
+                <p style="color:red" class="font-bold">Not Completed</p>
+            </ng-template>
+        </div>
+        <div class="flex space-x-64 widthx">
+            <p style="color:green" *ngIf="widthSum>=100 && isBtnClicked;else declarationelse" class="font-bold">Form Completed</p>
+            <ng-template #declarationelse>
+                <p style="color:red" class="font-bold">Form Not Completed</p>
+            </ng-template>
+        </div>
+    </div>
+
+    <form #declarationForm="ngForm" (ngSubmit)="storeDeclarationForm(declarationForm)">
+        <div class="mt-2 mb-2 ml-7 border-2 border-gray-200 rounded-md h-28 pt-1 pl-3">
+            <div class="border-slate-200 border-2 rounded-md w-96">
+                <h1 class="fontsized font-bold ml-7">Update/Submit Registration</h1>
+            </div>
+            <div class="border-slate-200 border-2 h-16 mt-1 rounded-md widthx">
+                <div class="flex">
+                    <input name="declare1" type="checkbox" required class="mb-3 ml-3" [(ngModel)]="declare.declare1" #declare1="ngModel" #dec1>
+                    <div *ngIf="declare1.invalid && (declare1.dirty || declare1.touched)">
+                        <div *ngIf="declare1.errors?.['required']" class="text-red-500 fontsize font-semibold ml-3"> !!! </div>
+                    </div>
+                    <p class="fontsizex ml-7 mr-7 font-semibold">I declare that the information given is true to the best of my knowledge and I understand 
+                        that any false information  , misrepresentation or omission of facts called for in this application , or other company records 
+                        may result in my immediate dismissal without notice even if subsequently employed .
+                    </p>
+                </div>
+                <div class="flex">
+                    <input name="declare2" type="checkbox" required class="ml-3" [(ngModel)]="declare.declare2" #declare2="ngModel" #dec2>
+                    <div *ngIf="declare2.invalid && (declare2.dirty || declare2.touched)">
+                        <div *ngIf="declare2.errors?.['required']" class="text-red-500 fontsize font-semibold ml-3"> !!! </div>
+                    </div>
+                    <p class="fontsizex ml-7 mr-7 font-semibold">I authorize inquiry with regard to my character , ability or habits to any and all persons 
+                        and agree to hold such persons harmless with respect to any information they may give .
+                    </p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="mt-2 mb-2 ml-7">
+            <button [disabled]="declarationForm.form.invalid" type="submit" class="bg-blue-900 h-8 w-28 font-bold text-white rounded-md">Submit</button>
+        </div>
+    </form>
+
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

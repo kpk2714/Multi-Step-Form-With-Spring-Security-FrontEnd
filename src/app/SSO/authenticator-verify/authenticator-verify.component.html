@@ -1,0 +1,53 @@
+<div class="w-full flex">
+    <div class="w-6/12" id="setBack">
+        <app-front></app-front>
+    </div>
+    <div class="w-6/12 mt-48">
+        <div class="ml-48">
+            <div class="flex mt-10 ml-5 items-center">
+                <img src="../../assets/images/logo.png" class="w-10">
+                <h1 class="font-semibold sso-text font-serif ml-5">SYN Portal</h1>
+            </div>
+            <div class="mt-7 ml-28">
+                <p class="sso-p-text font-semibold">Sign In</p>
+            </div>
+            <div class="mt-7 w-6/12 ml-2">
+                <form>
+                    <!-- Outer border wrapper (changes on input focus) -->
+                    <div class="rounded-xl transition-colors duration-200" [class]="studentIdFocused ? 'border-2 border-blue-500' : 'border-2 border-gray-500'">
+                
+                        <!-- Inner content with input and label -->
+                        <div class="flex h-12 rounded-xl">
+                            <input type="text" name="studentId" placeholder="Student ID" (focus)="studentIdFocused = true" (blur)="studentIdFocused = false" required
+                                    class="pl-4 w-full h-11 rounded-xl font-semibold placeholder:text-gray-500 placeholder:font-semibold focus:outline-none" [(ngModel)]="studentIdData" #studentId="ngModel">
+                                    
+                            <!-- <label class="w-2/12 flex items-center">.syn.portal</label> -->
+                        </div>
+
+                    </div>
+
+                    <!-- Outer border wrapper (changes on input focus) -->
+                    <div class="rounded-xl transition-colors duration-200 mt-7" [class]="emailFocused ? 'border-2 border-blue-500' : 'border-2 border-gray-500'">
+                
+                        <!-- Inner content with input and label -->
+                        <div class="flex h-12 rounded-xl">
+                            <input type="email" name="emailInput" pattern="[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\.[a-zA-Z]{2,}" placeholder="Email Address" (focus)="emailFocused = true" (blur)="emailFocused = false" required
+                                class="pl-4 w-full h-11 rounded-xl font-semibold placeholder:text-gray-500 placeholder:font-semibold focus:outline-none" [(ngModel)]="emailData" #emailInput="ngModel">
+                        </div>
+
+                    </div>
+                    
+                    <div class="mt-10 w-full">
+                        <button type="button" (click)="verifyDetails()" [disabled]="(emailInput.invalid || studentId.invalid)"
+                            class="rounded-lg w-full h-10 font-semibold"
+                            [class]="(emailInput.invalid || studentId.invalid) ? 'text-gray-500 bg-blue-50' : 'text-white bg-blue-700'" >Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

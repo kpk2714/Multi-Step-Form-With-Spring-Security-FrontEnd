@@ -1,0 +1,1489 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+<app-candidate-nav></app-candidate-nav>
+<div class="ml-5 mr-5 mb-7 border-2 border-gray-100 rounded-md h-auto">
+
+    <div class="mt-2 mb-2 ml-7 border-2 border-gray-200 rounded-md h-9 width pt-1 pl-3">
+        <div class="flex">
+            <h3 class="text-gray-400 fontsize">Registration Form Completeness</h3>
+            <div class="h-4 w-96 bg-white border-2 rounded-md ml-10 mt-1">
+                <div class="h-3 bg-green-500 rounded-md" [ngStyle]="{ 'width.%' : widthSum}"></div>
+            </div>
+            <h3 class="fontpercentage font-semibold ml-3 text-green-500">{{widthSum}}%</h3>
+        </div>
+        <!-- <mat-progress-bar mode="determinate" [value]="percentagevalue"></mat-progress-bar> -->
+    </div>
+
+    <div class="h-10 bg-blue-100">
+        <h3 class="fontsize text-black font-semibold pl-5 pt-2">Personal Details Information</h3>
+    </div>
+
+    <div *ngIf="submitBtn">
+        <form #personalform="ngForm" (ngSubmit)="storePersonalForm(personalform)">
+
+            <!-- {{personalform.value.title}} -->
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="flex">
+                        <img [src]="imageUrl" class="h-28 w-24 rounded-md border-2 mt-3 mb-3 ml-3">
+                        <div class="ml-3 mt-3 mb-3 mr-3 rounded-md">
+                            <div class="flex mt-2 ml-5">
+                                <label class="fontsize font-semibold">Upload Image</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="image-input">
+                                <input name="profile-picture" type="file" class="mt-3 ml-5 w-44 fontsize font-semibold file-image" (change)="onFileSelected($event , profilePic)" #picture [(ngModel)]="profilePicture" #profilePic="ngModel">
+                                <div *ngIf="profilePic.invalid && (profilePic.dirty || profilePic.touched)">
+                                    <div *ngIf="profilePic.errors?.['required']" class="text-red-500 fontsize font-semibold ml-5"> This field is required !!! </div>
+                                    <div *ngIf="profilePic.errors?.['invalidFileType']" class="text-red-500 fontsize font-semibold ml-5"> Invalid File Name !!! </div>
+                                    <div *ngIf="profilePic.errors?.['fileTooLarge']" class="text-red-500 fontsize font-semibold ml-5"> File Too Large !!! </div>
+                                </div>
+                            </div>
+                            <div class="flex mt-3 ml-5">
+                                <button type="button" (click)="onUpload(picture)" class="fontsize font-semibold bg-blue-100 rounded-md p-1.5">Upload File</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fontsize1 font-semibold">
+                        <p>Note : Allowed file type : JPG/JPEG/PNG</p>
+                        <p>Maximum file size : 5MB</p>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Title</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="title" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none"  required [(ngModel)]="personal.title" #title="ngModel">
+                                <option class="fontsize font-semibold">Mr.</option>
+                                <option class="fontsize font-semibold">Mrs.</option>
+                                <option class="fontsize font-semibold">Miss.</option>
+                            </select>
+                            <div *ngIf="title.invalid && (title.dirty || title.touched)">
+                                <div *ngIf="title.errors?.['required']" class="text-red-500 fontsize font-semibold"> This field is required !!! </div>
+                                <div *ngIf="title.errors?.['pattern']" class="text-red-500 fontsize font-semibold"> Invalid Input !!! </div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">First Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="firstname" type="text" required pattern="{{nameexpression}}" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.firstname" #firstname="ngModel" [ngModelOptions]="{standalone: true}">
+                            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+                                <div *ngIf="firstname.errors?.['required']" class="text-red-500 fontsize font-semibold"> This field is required !!! </div>
+                                <div *ngIf="firstname.errors?.['pattern']" class="text-red-500 fontsize font-semibold"> Invalid Input !!! </div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Middle Name</label>
+                            </div>
+                            <input name="middlename" type="text"  class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.middlename" #middlename="ngModel">
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Last Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="lastname" required type="text" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.lastname" #lastname="ngModel">
+                            <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                                <div *ngIf="lastname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Gender</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="gender" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none" [(ngModel)]="personal.gender" #gender="ngModel">
+                                <option class="fontsize font-semibold">Male</option>
+                                <option class="fontsize font-semibold">Female</option>
+                                <option class="fontsize font-semibold">Others</option>
+                            </select>
+                            <div *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                                <div *ngIf="gender.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Date of Birth</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="dob" type="date" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.dob" #dob="ngModel">
+                            <div *ngIf="dob.invalid && (dob.dirty || dob.touched)">
+                                <div *ngIf="dob.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Email ID</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="email" type="text" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.email" #email="ngModel">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                            <div *ngIf="email.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            <div *ngIf="email.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                        </div>
+                    </div>
+    
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Emergency Contact Person (Relation)</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="relation" type="text" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none" [(ngModel)]="personal.relation" #relation="ngModel">
+                        <div *ngIf="relation.invalid && (relation.dirty || relation.touched)">
+                            <div *ngIf="relation.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Alternate Email ID</label>
+                            </div>
+                            <input name="alteremail" type="text" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.alteremail" #alteremail="ngModel">
+                            <div *ngIf="alteremail.invalid && (alteremail.dirty || alteremail.touched)">
+                                <div *ngIf="alteremail.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Mobile No.</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input value="+91" disabled class="w-16 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md">
+                                <input name="mobile" type="text" required pattern="^[0-9]+$" minlength="10" maxlength="10" class="w-64 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.mobile" #mobile="ngModel">
+                            </div>
+                            <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+                                <div *ngIf="mobile.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="mobile.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                                <!-- <div *ngIf="mobile.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 10 !!!</div> -->
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Alternate Mobile No.</label>
+                            </div>
+                            <div class="flex">
+                                <input value="+91" disabled class="w-16 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md">
+                                <input name="altermobile" type="text" pattern="^[0-9]+$" minlength="10" maxlength="10" class="w-64 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.altermobile" #altermobile="ngModel">
+                            </div>
+                            <div *ngIf="altermobile.invalid && (altermobile.dirty || altermobile.touched)">
+                                <div *ngIf="altermobile.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                                <!-- <div *ngIf="altermobile.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 10 !!!</div> -->
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Emergency Contact Person Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="relationpersonname" type="text" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.relationpersonname" #relationpersonname="ngModel">
+                            <div *ngIf="relationpersonname.invalid && (relationpersonname.dirty || relationpersonname.touched)">
+                                <div *ngIf="relationpersonname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Emergency Contact Person No.</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input value="+91" disabled class="w-16 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md">
+                                <input name="relationpersonmobile" type="text" required pattern="^[0-9]+$" minlength="10" maxlength="10" class="w-64 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.relationpersonmobile" #relationpersonmobile="ngModel">
+                            </div>
+                            <div *ngIf="relationpersonmobile.invalid && (relationpersonmobile.dirty || relationpersonmobile.touched)">
+                                <div *ngIf="relationpersonmobile.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="relationpersonmobile.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                                <!-- <div *ngIf="relationpersonmobile.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 10 !!!</div> -->
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Nationality</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="nationality" required  class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.nationality" #nationality="ngModel">
+                                <option class="fontsize font-semibold">-Select-</option>
+                                <option class="fontsize font-semibold">Indian</option>
+                                <option class="fontsize font-semibold">Other</option>
+                            </select>
+                            <div *ngIf="nationality.invalid && (nationality.dirty || nationality.touched)">
+                                <div *ngIf="nationality.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Citizenship Status</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <select name="citizen" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.citizen" #citizen="ngModel">
+                            <option class="fontsize font-semibold">Permanent Resident</option>
+                            <option class="fontsize font-semibold">Present Resident</option>
+                            <option class="fontsize font-semibold">Student Visa</option>
+                            <option class="fontsize font-semibold">Employment Visa</option>
+                        </select>
+                        <div *ngIf="citizen.invalid && (citizen.dirty || citizen.touched)">
+                            <div *ngIf="citizen.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+    
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Religion</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <select name="religion" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none" [(ngModel)]="personal.religion" #religion="ngModel">
+                            <option class="fontsize font-semibold">Buddhism</option>
+                            <option class="fontsize font-semibold">Catholicism</option>
+                            <option class="fontsize font-semibold">Christianity</option>
+                            <option class="fontsize font-semibold">Hinduism</option>
+                            <option class="fontsize font-semibold">Islamic</option>
+                            <option class="fontsize font-semibold">Other</option>
+                        </select>
+                        <div *ngIf="religion.invalid && (religion.dirty || religion.touched)">
+                            <div *ngIf="religion.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">State of Birth</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="state" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.state" #State="ngModel">
+                                <option *ngFor="let states of state" class="fontsize font-semibold">{{states.sname}}</option>
+                            </select>
+                            <div *ngIf="State.invalid && (State.dirty || State.touched)">
+                                <div *ngIf="State.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Birth</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input type="text" name="district" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.district" #District="ngModel">
+                            <div *ngIf="District.invalid && (District.dirty || District.touched)">
+                                <div *ngIf="District.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Blood Group</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="blood" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.blood" #blood="ngModel">
+                                <option class="fontsize font-semibold">A Positive</option>
+                                <option class="fontsize font-semibold">A Negative</option>
+                                <option class="fontsize font-semibold">B Positive</option>
+                                <option class="fontsize font-semibold">B Negativee</option>
+                                <option class="fontsize font-semibold">AB Positive</option>
+                                <option class="fontsize font-semibold">AB Negative</option>
+                                <option class="fontsize font-semibold">O Positive</option>
+                                <option class="fontsize font-semibold">O Negative</option>
+                            </select>
+                            <div *ngIf="blood.invalid && (blood.dirty || blood.touched)">
+                                <div *ngIf="blood.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Reservation Category</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="reservation" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.reservation" #reservation="ngModel">
+                                <option class="fontsize font-semibold">General Category</option>
+                                <option class="fontsize font-semibold">Other Backward Classes</option>
+                                <option class="fontsize font-semibold">Scheduled Caste</option>
+                                <option class="fontsize font-semibold">Scheduled Tribe</option>
+                                <option class="fontsize font-semibold">Other</option>
+                            </select>
+                            <div *ngIf="reservation.invalid && (reservation.dirty || reservation.touched)">
+                                <div *ngIf="reservation.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Aadhar Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input name="aadhar" required pattern="^[0-9]+$" minlength="12" maxlength="12" type="text" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.aadhar" #aadhar="ngModel">
+                            </div>
+                            <div *ngIf="aadhar.invalid && (aadhar.dirty || aadhar.touched)">
+                                <div *ngIf="aadhar.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="aadhar.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Aadhar Card Number !!!</div>
+                                <!-- <div *ngIf="aadhar.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 16 !!!</div> -->
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Marital Status</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="marital" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.marital" #marital="ngModel">
+                                <option class="fontsize font-semibold">Divorced</option>
+                                <option class="fontsize font-semibold">Married</option>
+                                <option class="fontsize font-semibold">Separated</option>
+                                <option class="fontsize font-semibold">Unknown</option>
+                                <option class="fontsize font-semibold">UnMarried</option>
+                                <option class="fontsize font-semibold">Widowed</option>
+                            </select>
+                            <div *ngIf="marital.invalid && (marital.dirty || marital.touched)">
+                                <div *ngIf="marital.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="mt-3 h-10 bg-blue-100">
+                <h3 class="fontsize text-black font-semibold pl-5 pt-2">Identity Proof Details</h3>
+            </div>
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Driving License</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="drivinglicense" (click)="drivinglicenseYes('drivinglicensenumber','drivinglicensename','drivinglicenseplace',personalform)" type="radio" value="true" [(ngModel)]="personal.drivinglicense" #drivinglicense="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="drivinglicense" (click)="drivinglicenseNo('drivinglicensenumber','drivinglicensename','drivinglicenseplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.drivinglicense" #drivinglicense="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{drivingHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Driving License Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="drivinglicensenumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.drivinglicensenumber" #drivinglicensenumber="ngModel">
+                            <div *ngIf="drivinglicensenumber.invalid && (drivinglicensenumber.dirty || drivinglicensenumber.touched)">
+                                <div *ngIf="drivinglicensenumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="drivinglicensenumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Driving License Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="drivinglicensename" required pattern="{{nameexpression}}" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.drivinglicensename" #drivinglicensename="ngModel">
+                            <div *ngIf="drivinglicensename.invalid && (drivinglicensename.dirty || drivinglicensename.touched)">
+                                <div *ngIf="drivinglicensename.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="drivinglicensename.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="drivinglicenseplace" required pattern="{{nameexpression}}" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.drivinglicenseplace" #drivinglicensenumberplace="ngModel">
+                            <div *ngIf="drivinglicensenumberplace.invalid && (drivinglicensenumberplace.dirty || drivinglicensenumberplace.touched)">
+                                <div *ngIf="drivinglicensenumberplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="drivinglicensenumberplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 mt-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Pan Card</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="pancard" required (click)="panCardYes('pancardnumber','pancardname','pancardplace',personalform)" type="radio" value="true" [(ngModel)]="personal.pancard" #pancard="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="pancard" required (click)="panCardNo('pancardnumber','pancardname','pancardplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.pancard" #pancard="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                        <div *ngIf="pancard.invalid && (pancard.dirty || pancard.touched)">
+                            <div *ngIf="pancard.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{pancardHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Pan Card Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="pancardnumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.pancardnumber" #pancardnumber="ngModel">
+                            <div *ngIf="pancardnumber.invalid && (pancardnumber.dirty || pancardnumber.touched)">
+                                <div *ngIf="pancardnumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="pancardnumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Pan Card Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="pancardname" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.pancardname" #pancardname="ngModel">
+                            <div *ngIf="pancardname.invalid && (pancardname.dirty || pancardname.touched)">
+                                <div *ngIf="pancardname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="pancardname.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="pancardplace" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.pancardplace" #pancardplace="ngModel">
+                            <div *ngIf="pancardplace.invalid && (pancardplace.dirty || pancardplace.touched)">
+                                <div *ngIf="pancardplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="pancardplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 mt-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Voter Card</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="votercard" required (click)="voterCardYes('votercardnumber','votercardname','votercardplace',personalform)" type="radio" value="true" [(ngModel)]="personal.votercard" #votercard="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="votercard" required (click)="voterCardNo('votercardnumber','votercardname','votercardplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.votercard" #votercard="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                        <div *ngIf="votercard.invalid && (votercard.dirty || votercard.touched)">
+                            <div *ngIf="votercard.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{votercardHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Voter Card Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="votercardnumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.votercardnumber" #votercardnumber="ngModel">
+                            <div *ngIf="votercardnumber.invalid && (votercardnumber.dirty || votercardnumber.touched)">
+                                <div *ngIf="votercardnumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="votercardnumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Voter Card Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="votercardname" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.votercardname" #votercardname="ngModel">
+                            <div *ngIf="votercardname.invalid && (votercardname.dirty || votercardname.touched)">
+                                <div *ngIf="votercardname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="votercardname.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="votercardplace" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.votercardplace" #votercardplace="ngModel">
+                            <div *ngIf="votercardplace.invalid && (votercardplace.dirty || votercardplace.touched)">
+                                <div *ngIf="votercardplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="votercardplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 mt-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Passport</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="passport" required (click)="passportYes('passportnumber','passportname','passportplace',personalform)" type="radio" value="true" [(ngModel)]="personal.passport" #passport="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="passport" required (click)="passportNo('passportnumber','passportname','passportplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.passport" #passport="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                        <div *ngIf="passport.invalid && (passport.dirty || passport.touched)">
+                            <div *ngIf="passport.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{passportHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Passport Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="passportnumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.passportnumber" #passportnumber="ngModel">
+                            <div *ngIf="passportnumber.invalid && (passportnumber.dirty || passportnumber.touched)">
+                                <div *ngIf="passportnumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="passportnumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Passport Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="passportname" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.passportname" #passportname="ngModel">
+                            <div *ngIf="passportname.invalid && (passportname.dirty || passportname.touched)">
+                                <div *ngIf="passportname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="passportname.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="passportplace" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.passportplace" #passportplace="ngModel">
+                            <div *ngIf="passportplace.invalid && (passportplace.dirty || passportplace.touched)">
+                                <div *ngIf="passportplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="passportplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="mt-3 h-10 bg-blue-100">
+                <h3 class="fontsize text-black font-semibold pl-5 pt-2">Mailling Address</h3>
+            </div>
+    
+            <div class="ml-5 mr-5 mt-3 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Address Line 1</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="address1" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.address1" #address1="ngModel">
+                        <div *ngIf="address1.invalid && (address1.dirty || address1.touched)">
+                            <div *ngIf="address1.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+    
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Address Line 2</label>
+                        </div>
+                        <input name="address2" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.address2" #address2="ngModel">
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Landmark</label>
+                            </div>
+                            <input name="landmark" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.landmark" #landmark="ngModel">
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Country</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="country" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.country" #country="ngModel">
+                                <option class="fontsize font-semibold">India</option>
+                                <option class="fontsize font-semibold">Other</option>
+                            </select>
+                            <div *ngIf="country.invalid && (country.dirty || country.touched)">
+                                <div *ngIf="country.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">State</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="mailingstate" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.mailingstate" #mailingstate="ngModel">
+                                <option *ngFor="let states of state" class="fontsize font-semibold">{{states.sname}}</option>
+                            </select>
+                            <div *ngIf="mailingstate.invalid && (mailingstate.dirty || mailingstate.touched)">
+                                <div *ngIf="mailingstate.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>   
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">District</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input type="text" name="mailingdistrict" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.mailingdistrict" #mailingdistrict="ngModel">
+                            <div *ngIf="mailingdistrict.invalid && (mailingdistrict.dirty || mailingdistrict.touched)">
+                                <div *ngIf="mailingdistrict.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">City</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input name="city" required type="text" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.city" #city="ngModel">
+                            </div>
+                            <div *ngIf="city.invalid && (city.dirty || city.touched)">
+                                <div *ngIf="city.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Postal Code</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="postalcode" required pattern="^[0-9]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.postalcode" #postalcode="ngModel">
+                            <div *ngIf="postalcode.invalid && (postalcode.dirty || postalcode.touched)">
+                                <div *ngIf="postalcode.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="postalcode.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid value !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+<!--     
+            <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <p *ngIf="personalMessage.length>30" class="text-red-700 font-bold ml-64">{{personalMessage}}</p>
+                <p *ngIf="personalMessage.length<30" class="text-green-700 font-bold ml-64">{{personalMessage}}</p>
+            </div> -->
+    
+    
+            <!-- <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <p>{{personalData.firstname}}</p>[disabled]="personalform.form.invalid"
+            </div> -->
+    
+            <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <button type="submit" [disabled]="personalform.form.invalid" class="bg-blue-900 w-14 h-7 text-center font-semibold text-white fontsize rounded-md ml-64">Save</button>
+                <button type="button" (click)="resetPersonalForm(personalform)" class="w-16 h-7 text-center text-blue-900 fontsize font-semibold rounded-md border-2 border-blue-900 ml-16">Cancel</button>
+            </div>
+    
+        </form>
+    </div>
+
+    <div *ngIf="editBtn">
+        <form #personalform="ngForm" (ngSubmit)="updatePersonalForm(personalform)">
+
+            <!-- {{personalform.value.title}} -->
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="flex">
+                        <img [src]="imageUrl" class="h-28 w-24 rounded-md border-2 mt-3 mb-3 ml-3">
+                        <div class="ml-3 mt-3 mb-3 mr-3 rounded-md">
+                            <div class="flex mt-2 ml-5">
+                                <label class="fontsize font-semibold">Upload Image</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="image-input">
+                                <input name="profile-picture" type="file" class="mt-3 ml-5 w-44 fontsize font-semibold file-image" (change)="onFileSelected($event , profilePic)" #picture [(ngModel)]="profilePicture" #profilePic="ngModel">
+                                <div *ngIf="profilePic.invalid && (profilePic.dirty || profilePic.touched)">
+                                    <div *ngIf="profilePic.errors?.['required']" class="text-red-500 fontsize font-semibold ml-5"> This field is required !!! </div>
+                                    <div *ngIf="profilePic.errors?.['invalidFileType']" class="text-red-500 fontsize font-semibold ml-5"> Invalid File Name !!! </div>
+                                    <div *ngIf="profilePic.errors?.['fileTooLarge']" class="text-red-500 fontsize font-semibold ml-5"> File Too Large !!! </div>
+                                </div>
+                            </div>
+                            <div class="flex mt-3 ml-5">
+                                <button type="button" [disabled]="profilePic.invalid" (click)="onUpload(picture)" class="fontsize font-semibold bg-blue-100 rounded-md p-1.5">Upload File</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="fontsize1 font-semibold">
+                        <p>Note : Allowed file type : JPG/JPEG/PNG</p>
+                        <p>Maximum file size : 5MB</p>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Title</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="title" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none"  required [(ngModel)]="personal.title" #title="ngModel">
+                                <option class="fontsize font-semibold">Mr.</option>
+                                <option class="fontsize font-semibold">Mrs.</option>
+                                <option class="fontsize font-semibold">Miss.</option>
+                            </select>
+                            <div *ngIf="title.invalid && (title.dirty || title.touched)">
+                                <div *ngIf="title.errors?.['required']" class="text-red-500 fontsize font-semibold"> This field is required !!! </div>
+                                <div *ngIf="title.errors?.['pattern']" class="text-red-500 fontsize font-semibold"> Invalid Input !!! </div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">First Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="firstname" type="text" required pattern="{{nameexpression}}" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.firstname" #firstname="ngModel" [ngModelOptions]="{standalone: true}">
+                            <div *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)">
+                                <div *ngIf="firstname.errors?.['required']" class="text-red-500 fontsize font-semibold"> This field is required !!! </div>
+                                <div *ngIf="firstname.errors?.['pattern']" class="text-red-500 fontsize font-semibold"> Invalid Input !!! </div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Middle Name</label>
+                            </div>
+                            <input name="middlename" type="text"  class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.middlename" #middlename="ngModel">
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Last Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="lastname" required type="text" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.lastname" #lastname="ngModel">
+                            <div *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)">
+                                <div *ngIf="lastname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Gender</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="gender" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none" [(ngModel)]="personal.gender" #gender="ngModel">
+                                <option class="fontsize font-semibold">Male</option>
+                                <option class="fontsize font-semibold">Female</option>
+                                <option class="fontsize font-semibold">Others</option>
+                            </select>
+                            <div *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                                <div *ngIf="gender.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Date of Birth</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="dob" type="date" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.dob" #dob="ngModel">
+                            <div *ngIf="dob.invalid && (dob.dirty || dob.touched)">
+                                <div *ngIf="dob.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Email ID</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="email" type="text" required pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.email" #email="ngModel">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                            <div *ngIf="email.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            <div *ngIf="email.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                        </div>
+                    </div>
+    
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Emergency Contact Person (Relation)</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="relation" type="text" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none" [(ngModel)]="personal.relation" #relation="ngModel">
+                        <div *ngIf="relation.invalid && (relation.dirty || relation.touched)">
+                            <div *ngIf="relation.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Alternate Email ID</label>
+                            </div>
+                            <input name="alteremail" type="text" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.alteremail" #alteremail="ngModel">
+                            <div *ngIf="alteremail.invalid && (alteremail.dirty || alteremail.touched)">
+                                <div *ngIf="alteremail.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Mobile No.</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input value="+91" disabled class="w-16 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md">
+                                <input name="mobile" type="text" required pattern="^[0-9]+$" minlength="10" maxlength="10" class="w-64 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.mobile" #mobile="ngModel">
+                            </div>
+                            <div *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+                                <div *ngIf="mobile.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="mobile.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                                <!-- <div *ngIf="mobile.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 10 !!!</div> -->
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Alternate Mobile No.</label>
+                            </div>
+                            <div class="flex">
+                                <input value="+91" disabled class="w-16 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md">
+                                <input name="altermobile" type="text" pattern="^[0-9]+$" minlength="10" maxlength="10" class="w-64 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.altermobile" #altermobile="ngModel">
+                            </div>
+                            <div *ngIf="altermobile.invalid && (altermobile.dirty || altermobile.touched)">
+                                <div *ngIf="altermobile.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                                <!-- <div *ngIf="altermobile.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 10 !!!</div> -->
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Emergency Contact Person Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="relationpersonname" type="text" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.relationpersonname" #relationpersonname="ngModel">
+                            <div *ngIf="relationpersonname.invalid && (relationpersonname.dirty || relationpersonname.touched)">
+                                <div *ngIf="relationpersonname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Emergency Contact Person No.</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input value="+91" disabled class="w-16 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md">
+                                <input name="relationpersonmobile" type="text" required pattern="^[0-9]+$" minlength="10" maxlength="10" class="w-64 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.relationpersonmobile" #relationpersonmobile="ngModel">
+                            </div>
+                            <div *ngIf="relationpersonmobile.invalid && (relationpersonmobile.dirty || relationpersonmobile.touched)">
+                                <div *ngIf="relationpersonmobile.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="relationpersonmobile.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                                <!-- <div *ngIf="relationpersonmobile.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 10 !!!</div> -->
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Nationality</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="nationality" required  class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.nationality" #nationality="ngModel">
+                                <option class="fontsize font-semibold">-Select-</option>
+                                <option class="fontsize font-semibold">Indian</option>
+                                <option class="fontsize font-semibold">Other</option>
+                            </select>
+                            <div *ngIf="nationality.invalid && (nationality.dirty || nationality.touched)">
+                                <div *ngIf="nationality.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Citizenship Status</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <select name="citizen" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.citizen" #citizen="ngModel">
+                            <option class="fontsize font-semibold">Permanent Resident</option>
+                            <option class="fontsize font-semibold">Present Resident</option>
+                            <option class="fontsize font-semibold">Student Visa</option>
+                            <option class="fontsize font-semibold">Employment Visa</option>
+                        </select>
+                        <div *ngIf="citizen.invalid && (citizen.dirty || citizen.touched)">
+                            <div *ngIf="citizen.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+    
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Religion</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <select name="religion" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-2 rounded-md focus:outline-none" [(ngModel)]="personal.religion" #religion="ngModel">
+                            <option class="fontsize font-semibold">Buddhism</option>
+                            <option class="fontsize font-semibold">Catholicism</option>
+                            <option class="fontsize font-semibold">Christianity</option>
+                            <option class="fontsize font-semibold">Hinduism</option>
+                            <option class="fontsize font-semibold">Islamic</option>
+                            <option class="fontsize font-semibold">Other</option>
+                        </select>
+                        <div *ngIf="religion.invalid && (religion.dirty || religion.touched)">
+                            <div *ngIf="religion.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">State of Birth</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="state" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.state" #State="ngModel">
+                                <option *ngFor="let states of state" class="fontsize font-semibold">{{states.sname}}</option>
+                            </select>
+                            <div *ngIf="State.invalid && (State.dirty || State.touched)">
+                                <div *ngIf="State.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Birth</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input type="text" name="district" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.district" #District="ngModel">
+                            <div *ngIf="District.invalid && (District.dirty || District.touched)">
+                                <div *ngIf="District.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Blood Group</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="blood" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.blood" #blood="ngModel">
+                                <option class="fontsize font-semibold">A Positive</option>
+                                <option class="fontsize font-semibold">A Negative</option>
+                                <option class="fontsize font-semibold">B Positive</option>
+                                <option class="fontsize font-semibold">B Negativee</option>
+                                <option class="fontsize font-semibold">AB Positive</option>
+                                <option class="fontsize font-semibold">AB Negative</option>
+                                <option class="fontsize font-semibold">O Positive</option>
+                                <option class="fontsize font-semibold">O Negative</option>
+                            </select>
+                            <div *ngIf="blood.invalid && (blood.dirty || blood.touched)">
+                                <div *ngIf="blood.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Reservation Category</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="reservation" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.reservation" #reservation="ngModel">
+                                <option class="fontsize font-semibold">General Category</option>
+                                <option class="fontsize font-semibold">Other Backward Classes</option>
+                                <option class="fontsize font-semibold">Scheduled Caste</option>
+                                <option class="fontsize font-semibold">Scheduled Tribe</option>
+                                <option class="fontsize font-semibold">Other</option>
+                            </select>
+                            <div *ngIf="reservation.invalid && (reservation.dirty || reservation.touched)">
+                                <div *ngIf="reservation.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Aadhar Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input name="aadhar" required pattern="^[0-9]+$" minlength="12" maxlength="12" type="text" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.aadhar" #aadhar="ngModel">
+                            </div>
+                            <div *ngIf="aadhar.invalid && (aadhar.dirty || aadhar.touched)">
+                                <div *ngIf="aadhar.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="aadhar.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Aadhar Card Number !!!</div>
+                                <!-- <div *ngIf="aadhar.errors?.['minlength' || 'maxlength']" class="text-red-500 fontsize font-semibold">Length Must be 16 !!!</div> -->
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Marital Status</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="marital" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.marital" #marital="ngModel">
+                                <option class="fontsize font-semibold">Divorced</option>
+                                <option class="fontsize font-semibold">Married</option>
+                                <option class="fontsize font-semibold">Separated</option>
+                                <option class="fontsize font-semibold">Unknown</option>
+                                <option class="fontsize font-semibold">UnMarried</option>
+                                <option class="fontsize font-semibold">Widowed</option>
+                            </select>
+                            <div *ngIf="marital.invalid && (marital.dirty || marital.touched)">
+                                <div *ngIf="marital.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="mt-3 h-10 bg-blue-100">
+                <h3 class="fontsize text-black font-semibold pl-5 pt-2">Identity Proof Details</h3>
+            </div>
+    
+            <div class="ml-5 mr-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Driving License</label>
+                        </div>
+                        <div class="flex">
+                            <input name="drivinglicense" (click)="drivinglicenseYes('drivinglicensenumber','drivinglicensename','drivinglicenseplace',personalform)" type="radio" value="true" [(ngModel)]="personal.drivinglicense" #drivinglicense="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="drivinglicense" (click)="drivinglicenseNo('drivinglicensenumber','drivinglicensename','drivinglicenseplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.drivinglicense" #drivinglicense="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{drivingHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Driving License Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="drivinglicensenumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.drivinglicensenumber" #drivinglicensenumber="ngModel">
+                            <div *ngIf="drivinglicensenumber.invalid && (drivinglicensenumber.dirty || drivinglicensenumber.touched)">
+                                <div *ngIf="drivinglicensenumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="drivinglicensenumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Driving License Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="drivinglicensename" required pattern="{{nameexpression}}" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.drivinglicensename" #drivinglicensename="ngModel">
+                            <div *ngIf="drivinglicensename.invalid && (drivinglicensename.dirty || drivinglicensename.touched)">
+                                <div *ngIf="drivinglicensename.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="drivinglicensename.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="drivinglicenseplace" required pattern="{{nameexpression}}" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.drivinglicenseplace" #drivinglicensenumberplace="ngModel">
+                            <div *ngIf="drivinglicensenumberplace.invalid && (drivinglicensenumberplace.dirty || drivinglicensenumberplace.touched)">
+                                <div *ngIf="drivinglicensenumberplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="drivinglicensenumberplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 mt-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Pan Card</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="pancard" required (click)="panCardYes('pancardnumber','pancardname','pancardplace',personalform)" type="radio" value="true" [(ngModel)]="personal.pancard" #pancard="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="pancard" required (click)="panCardNo('pancardnumber','pancardname','pancardplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.pancard" #pancard="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                        <div *ngIf="pancard.invalid && (pancard.dirty || pancard.touched)">
+                            <div *ngIf="pancard.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{pancardHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Pan Card Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="pancardnumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.pancardnumber" #pancardnumber="ngModel">
+                            <div *ngIf="pancardnumber.invalid && (pancardnumber.dirty || pancardnumber.touched)">
+                                <div *ngIf="pancardnumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="pancardnumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Pan Card Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="pancardname" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.pancardname" #pancardname="ngModel">
+                            <div *ngIf="pancardname.invalid && (pancardname.dirty || pancardname.touched)">
+                                <div *ngIf="pancardname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="pancardname.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="pancardplace" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.pancardplace" #pancardplace="ngModel">
+                            <div *ngIf="pancardplace.invalid && (pancardplace.dirty || pancardplace.touched)">
+                                <div *ngIf="pancardplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="pancardplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 mt-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Voter Card</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="votercard" required (click)="voterCardYes('votercardnumber','votercardname','votercardplace',personalform)" type="radio" value="true" [(ngModel)]="personal.votercard" #votercard="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="votercard" required (click)="voterCardNo('votercardnumber','votercardname','votercardplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.votercard" #votercard="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                        <div *ngIf="votercard.invalid && (votercard.dirty || votercard.touched)">
+                            <div *ngIf="votercard.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{votercardHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Voter Card Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="votercardnumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.votercardnumber" #votercardnumber="ngModel">
+                            <div *ngIf="votercardnumber.invalid && (votercardnumber.dirty || votercardnumber.touched)">
+                                <div *ngIf="votercardnumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="votercardnumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Voter Card Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="votercardname" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.votercardname" #votercardname="ngModel">
+                            <div *ngIf="votercardname.invalid && (votercardname.dirty || votercardname.touched)">
+                                <div *ngIf="votercardname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="votercardname.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="votercardplace" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.votercardplace" #votercardplace="ngModel">
+                            <div *ngIf="votercardplace.invalid && (votercardplace.dirty || votercardplace.touched)">
+                                <div *ngIf="votercardplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="votercardplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="ml-5 mr-5 mt-5 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Passport</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="flex">
+                            <input name="passport" required (click)="passportYes('passportnumber','passportname','passportplace',personalform)" type="radio" value="true" [(ngModel)]="personal.passport" #passport="ngModel">
+                            <label class="ml-3">Yes</label>
+                            <input name="passport" required (click)="passportNo('passportnumber','passportname','passportplace',personalform)" type="radio" value="false" class="ml-3" [(ngModel)]="personal.passport" #passport="ngModel">
+                            <label class="ml-3">No</label>
+                        </div>
+                        <div *ngIf="passport.invalid && (passport.dirty || passport.touched)">
+                            <div *ngIf="passport.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="{{passportHidden}}">
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Passport Number</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="passportnumber" required pattern="^[a-zA-Z0-9 ]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.passportnumber" #passportnumber="ngModel">
+                            <div *ngIf="passportnumber.invalid && (passportnumber.dirty || passportnumber.touched)">
+                                <div *ngIf="passportnumber.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="passportnumber.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Passport Given Name</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="passportname" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.passportname" #passportname="ngModel">
+                            <div *ngIf="passportname.invalid && (passportname.dirty || passportname.touched)">
+                                <div *ngIf="passportname.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="passportname.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Place of Issue</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="passportplace" required pattern="^[a-zA-Z .]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.passportplace" #passportplace="ngModel">
+                            <div *ngIf="passportplace.invalid && (passportplace.dirty || passportplace.touched)">
+                                <div *ngIf="passportplace.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="passportplace.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid Input !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <div class="mt-3 h-10 bg-blue-100">
+                <h3 class="fontsize text-black font-semibold pl-5 pt-2">Mailling Address</h3>
+            </div>
+    
+            <div class="ml-5 mr-5 mt-3 flex">
+                <div class="w-3/12">
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Address Line 1</label>
+                            <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <input name="address1" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.address1" #address1="ngModel">
+                        <div *ngIf="address1.invalid && (address1.dirty || address1.touched)">
+                            <div *ngIf="address1.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                        </div>
+                    </div>
+    
+                    <div class="pt-2">
+                        <div class="flex">
+                            <label class="fontsize font-semibold">Address Line 2</label>
+                        </div>
+                        <input name="address2" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.address2" #address2="ngModel">
+                    </div>
+                </div>
+    
+                <div>
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Landmark</label>
+                            </div>
+                            <input name="landmark" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.landmark" #landmark="ngModel">
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Country</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="country" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.country" #country="ngModel">
+                                <option class="fontsize font-semibold">India</option>
+                                <option class="fontsize font-semibold">Other</option>
+                            </select>
+                            <div *ngIf="country.invalid && (country.dirty || country.touched)">
+                                <div *ngIf="country.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">State</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <select name="mailingstate" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.mailingstate" #mailingstate="ngModel">
+                                <option *ngFor="let states of state" class="fontsize font-semibold">{{states.sname}}</option>
+                            </select>
+                            <div *ngIf="mailingstate.invalid && (mailingstate.dirty || mailingstate.touched)">
+                                <div *ngIf="mailingstate.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>   
+                        </div>
+                    </div>
+        
+                    <div class="pt-2 flex">
+                        <div class="ml-5">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">District</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="mailingdistrict" required class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.mailingdistrict" #mailingdistrict="ngModel">
+                            <div *ngIf="mailingdistrict.invalid && (mailingdistrict.dirty || mailingdistrict.touched)">
+                                <div *ngIf="mailingdistrict.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">City</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <div class="flex">
+                                <input name="city" required type="text" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 ml-0.5 rounded-md focus:outline-none" [(ngModel)]="personal.city" #city="ngModel">
+                            </div>
+                            <div *ngIf="city.invalid && (city.dirty || city.touched)">
+                                <div *ngIf="city.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                            </div>
+                        </div>
+        
+                        <div class="ml-14">
+                            <div class="flex">
+                                <label class="fontsize font-semibold">Postal Code</label>
+                                <div class="w-1.5 h-1.5"><img src="assets/images/asteric.png"></div>
+                            </div>
+                            <input name="postalcode" required pattern="^[0-9]+$" class="w-80 border-2 fontsize font-semibold border-gray-300 h-9 pl-3 rounded-md focus:outline-none" [(ngModel)]="personal.postalcode" #postalcode="ngModel">
+                            <div *ngIf="postalcode.invalid && (postalcode.dirty || postalcode.touched)">
+                                <div *ngIf="postalcode.errors?.['required']" class="text-red-500 fontsize font-semibold">This field is required !!!</div>
+                                <div *ngIf="postalcode.errors?.['pattern']" class="text-red-500 fontsize font-semibold">Invalid value !!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <!-- <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <p *ngIf="personalMessage.length>30" class="text-red-700 font-bold ml-64">{{personalMessage}}</p>
+                <p *ngIf="personalMessage.length<30" class="text-green-700 font-bold ml-64">{{personalMessage}}</p>
+            </div> -->
+    
+    
+            <!-- <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <p>{{personalData.firstname}}</p>[disabled]="personalform.form.invalid"
+            </div> -->
+    
+            <div class="mt-10 mb-10 flex ml-96 mr-96">
+                <button type="submit" [disabled]="personalform.form.invalid" class="bg-yellow-500 w-14 h-7 text-center font-semibold text-white fontsize rounded-md ml-64">Edit</button>
+                <button type="button" (click)="resetPersonalForm(personalform)" class="w-16 h-7 text-center text-blue-900 fontsize font-semibold rounded-md border-2 border-blue-900 ml-16">Cancel</button>
+            </div>
+    
+        </form>
+    </div>
+    
+</div>

@@ -1,0 +1,716 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+<app-candidate-nav></app-candidate-nav>
+<div class="ml-5 mr-5 mb-7 border-2 border-gray-100 rounded-md h-auto">
+    <div class="mt-2 mb-2 ml-7 border-2 border-gray-200 rounded-md h-9 width pt-1 pl-3">
+        <div class="flex">
+            <h3 class="text-gray-400 fontsize">Registration Form Completeness</h3>
+            <div class="h-4 w-96 bg-white border-2 rounded-md ml-10 mt-1">
+                <div class="h-3 bg-green-500 rounded-md" [ngStyle]="{ 'width.%' : widthSum}"></div>
+            </div>
+            <h3 class="fontpercentage font-semibold ml-3 text-green-500">{{widthSum}}%</h3>
+        </div>
+        <!-- <mat-progress-bar mode="determinate" [value]="percentagevalue"></mat-progress-bar> -->
+    </div>
+
+    <div class="h-10 bg-blue-100 flex justify-between">
+        <h3 class="fontsize text-black font-semibold pl-5 pt-2">General Documents</h3>
+    </div>
+
+    <div class="m-7 border-2 border-gray-100 rounded-md h-28 bg-blue-50">
+        <div class="flex fontsizedocuments font-bold">
+            <i class="bi bi-exclamation-circle-fill font-bold text-blue-700 ml-7 fontincrease"></i>
+            <h2 class="font-bold text-blue-700 ml-2.5 mt-2">Note</h2>
+            <i class="bi bi-circle-fill ml-10 mt-3"></i>
+            <p class="ml-3 mt-3"> Only Original copy of the documents to be uploaded!...All documents to be uploaded in .pdf format only</p>
+        </div>
+        <div class="flex ml-24 fontsizedocuments font-bold">
+            <i class="bi bi-circle-fill ml-7"></i>
+            <p class="ml-3"> Please upload clear scan copies of all your documents</p>
+        </div>
+        <div class="flex ml-24 fontsizedocuments font-bold">
+            <i class="bi bi-circle-fill ml-7"></i>
+            <p class="ml-3"> Camera scanned copies/picture clicked copies are strictly NOT ACCEPTABLE</p>
+        </div>
+        <div class="flex ml-24 fontsizedocuments font-bold">
+            <i class="bi bi-circle-fill ml-7"></i>
+            <p class="ml-3"> HR Document Approve Status : </p>
+            <i class="bi bi-circle-fill ml-2 text-green-700"></i>
+            <p class="ml-3"> Approved , </p>
+            <i class="bi bi-circle-fill ml-2 text-red-700"></i>
+            <p class="ml-3"> Rejected , </p>
+            <i class="bi bi-circle-fill ml-2 text-yellow-700"></i>
+            <p class="ml-3"> Verification Pending </p>
+        </div>
+    </div>
+
+    <div>
+        <form #documentsUpload="ngForm" (ngSubmit)="storeDocumentUploadForm(documentsUpload)">
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewDataPrivacy()">Data Privacy Document</h2>
+                    </div>
+                    <div class="{{showDataPrivacy}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-5 mr-5 flex space-x-64">
+                            <div class="ml-3 mt-0.5">
+                                <small class="font-semibold">Data Privacy Document</small>
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="clickToViewDataPrivacy()" type="button" class="font-semibold"><small>Click Here to View the Document</small></button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewProofOfAge()">Proof of Age</h2>
+                    </div>
+                    <div class="{{showProofOfAge}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" required name="proof-of-age" class="font-semibold documentFont" (change)="onFileSelected($event , age)" [(ngModel)]="dummyValue" #age="ngModel" #proofOfAge>
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button type="button" (click)="onUploadProofOfAge(proofOfAge)" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="age.invalid && (age.dirty || age.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="age.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="age.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="age.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-80 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{proofOfAgePdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="proofOfAgePdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{proofOfAgePdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="proofOfAgePdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{proofOfAgePdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="proofOfAgePdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{proofOfAgePdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadProofOfAge(proofOfAge)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewProofOfAge()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewDrivingLicense()">Driving License</h2>
+                    </div>
+                    <div class="{{showDrivingLicense}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="driving-license" required class="font-semibold documentFont" (change)="onFileSelected($event , dl)" #driving [(ngModel)]="dummyValue" #dl="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadDrivingLicense(driving)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="dl.invalid && (dl.dirty || dl.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="dl.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="dl.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="dl.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{drivingLicensePdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="drivingLicensePdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{drivingLicensePdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="drivingLicensePdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{drivingLicensePdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="drivingLicensePdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{drivingLicensePdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadDrivingLicense(driving)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewDrivingLicense()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewPassport()">Passport</h2>
+                    </div>
+                    <div class="{{showPassport}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="passport" class="font-semibold documentFont" (change)="onFileSelected($event , pp)" #passport [(ngModel)]="dummyValue" #pp="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadPassport(passport)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="pp.invalid && (pp.dirty || pp.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="pp.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="pp.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{passportPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="passportPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{passportPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="passportPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{passportPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="passportPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{passportPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadPassport(passport)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewPassport()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewPanCard()">Pan Card</h2>
+                    </div>
+                    <div class="{{showPanCard}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="pancard" required class="font-semibold documentFont" (change)="onFileSelected($event , pc)" #pancard [(ngModel)]="dummyValue" #pc="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadPancard(pancard)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="pc.invalid && (pc.dirty || pc.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="pc.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="pc.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="pc.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-80 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{pancardPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="pancardPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{pancardPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="pancardPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{pancardPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="pancardPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{pancardPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadPancard(pancard)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewPancard()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewAadharCard()">Aadhar Card</h2>
+                    </div>
+                    <div class="{{showAadharCard}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="aadhar-card" required class="font-semibold documentFont" (change)="onFileSelected($event , ad)" #aadharcard [(ngModel)]="dummyValue" #ad="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadAadharcard(aadharcard)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="ad.invalid && (ad.dirty || ad.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="ad.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="ad.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="ad.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{aadharcardPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="aadharcardPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{aadharcardPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="aadharcardPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{aadharcardPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="aadharcardPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{aadharcardPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadAadharcard(aadharcard)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewAadharcard()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewSSC()">SSC Marksheet</h2>
+                    </div>
+                    <div class="{{showSSC}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="ssc-marksheet" required class="font-semibold documentFont" (change)="onFileSelected($event , mc)" #ssc [(ngModel)]="dummyValue" #mc="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadSSC(ssc)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="mc.invalid && (mc.dirty || mc.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="mc.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="mc.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="mc.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{sscPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="sscPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{sscPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="sscPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{sscPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="sscPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{sscPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold cursor-pointer" (click)="onUploadSSC(ssc)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewSSC()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewHSC()">HSC Marksheet</h2>
+                    </div>
+                    <div class="{{showHSC}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="hsc-marksheet" required class="font-semibold documentFont" (change)="onFileSelected($event , hc)" #hsc [(ngModel)]="dummyValue" #hc="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadHSC(hsc)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="hc.invalid && (hc.dirty || hc.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="hc.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="hc.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="hc.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{hscPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="hscPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{hscPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="hscPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{hscPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="hscPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{hscPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadHSC(hsc)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewHSC()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewDegreeMarksheet()">Degree Marksheet</h2>
+                    </div>
+                    <div class="{{showDegreeMarksheet}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="degree-marksheet" required class="font-semibold documentFont" (change)="onFileSelected($event , dc)" #degree [(ngModel)]="dummyValue" #dc="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadDegree(degree)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="dc.invalid && (dc.dirty || dc.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="dc.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="dc.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="dc.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{degreePdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="degreePdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{degreePdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="degreePdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{degreePdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="degreePdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{degreePdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadDegree(degree)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewDegree()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewProvisionalOrPassing()">Degree Provisional/Passing Certificate</h2>
+                    </div>
+                    <div class="{{showProvisionalOrPassing}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="degree-provisional-or-passing" required class="font-semibold documentFont" (change)="onFileSelected($event , p)" #provisional [(ngModel)]="dummyValue" #p="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadProvisional(provisional)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="p.invalid && (p.dirty || p.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="p.errors?.['required']" class="text-red-500 textsize font-semibold">This is Required !!!</div>
+                            <div *ngIf="p.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="p.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{provisionalPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="provisionalPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{provisionalPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="provisionalPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{provisionalPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="provisionalPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{provisionalPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadProvisional(provisional)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewProvisional()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewPostDegreeMarksheet()">Post Degree Marksheet</h2>
+                    </div>
+                    <div class="{{showPostDegreeMarksheet}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="post-degree-marksheet" class="font-semibold documentFont" (change)="onFileSelected($event , pd)" #postdegree [(ngModel)]="dummyValue" #pd="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadPostDegree(postdegree)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="pd.invalid && (pd.dirty || pd.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="pd.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="pd.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-64 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{postdegreePdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="postdegreePdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{postdegreePdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="postdegreePdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{postdegreePdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="postdegreePdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{postdegreePdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadPostDegree(postdegree)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewPostDegree()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewPostDegreeProvisionalOrPassing()">Post Degree Provisional/Passing Certificate</h2>
+                    </div>
+                    <div class="{{showPostDegreeProvisionalOrPassing}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="post-degree-provisional-or-passing" class="font-semibold documentFont" (change)="onFileSelected($event , postp)" #postprovisional [(ngModel)]="dummyValue" #postp="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadPostProvisional(postprovisional)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="postp.invalid && (postp.dirty || postp.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="postp.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="postp.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-64 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{postprovisionalPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="postprovisionalPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{postprovisionalPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="postprovisionalPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{postprovisionalPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="postprovisionalPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{postprovisionalPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadPostProvisional(postprovisional)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewPostProvisional()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex">
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewDiplomaMarksheet()">Diploma Marksheet</h2>
+                    </div>
+                    <div class="{{showDiplomaMarksheet}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="diploma-marksheet" class="font-semibold documentFont" (change)="onFileSelected($event , dip)" #diploma [(ngModel)]="dummyValue" #dip="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadDiploma(diploma)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="dip.invalid && (dip.dirty || dip.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="dip.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="dip.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{diplomaPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="diplomaPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{diplomaPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="diplomaPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{diplomaPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="diplomaPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{diplomaPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadDiploma(diploma)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewDiploma()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widthnice ml-7 mr-7 mt-2">
+                    <div class="pt-0.5 h-9  bg-blue-100">
+                        <h2 class="font-semibold mt-1 ml-3 cursor-pointer" (click)="viewDiplomaProvisionalOrPassing()">Diploma Provisional/Passing Certificate</h2>
+                    </div>
+                    <div class="{{showDiplomaProvisionalOrPassing}} border-2 border-slate-200 h-32 w-full">
+                        <div class="mt-5 border-2 w-auto h-9 ml-2 mr-2 flex space-x-96">
+                            <div class="ml-3 mt-0.5 w-48">
+                                <input type="file" name="diploma-provisional-or-passing" class="font-semibold documentFont" (change)="onFileSelected($event , diplomaPov)" #diplomaprovisional [(ngModel)]="dummyValue" #diplomaPov="ngModel">
+                            </div>
+                            <div class="border-2 bg-slate-400 rounded-md w-auto m-0.5 pl-2 pr-2">
+                                <button (click)="onUploadDiplomaprovisional(diplomaprovisional)" type="button" class="font-semibold"><small>Upload</small></button>
+                            </div>
+                        </div>
+                        <div *ngIf="diplomaPov.invalid && (diplomaPov.dirty || diplomaPov.touched)" class="ml-2 w-auto mt-1">
+                            <div *ngIf="diplomaPov.errors?.['invalidFileType']" class="text-red-500 textsize font-semibold">Invalid File !!!</div>
+                            <div *ngIf="diplomaPov.errors?.['fileTooLarge']" class="text-red-500 textsize font-semibold">File Too Large !!!</div>
+                        </div>
+                        <div class="w-auto flex space-x-72 mt-4">
+                            <div class="flex">
+                                <div class="flex ml-2">
+                                    <i class="bi bi-file-earmark-pdf text-red-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-semibold">{{diplomaprovisionalPdf?.filename}}</p>
+                                </div>
+                                <div class="bg-green-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="diplomaprovisionalPdf?.status=='Approved'" class="text-green-700 font-bold textsize">{{diplomaprovisionalPdf?.status}}</p>
+                                </div>
+                                <div class="bg-yellow-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="diplomaprovisionalPdf?.status=='Pending'" class="text-yellow-700 font-bold textsize">{{diplomaprovisionalPdf?.status}}</p>
+                                </div>
+                                <div class="bg-red-100 rounded-md mt-1 ml-2">
+                                    <p *ngIf="diplomaprovisionalPdf?.status=='Rejected'" class="text-red-700 font-bold textsize">{{diplomaprovisionalPdf?.status}}</p>
+                                </div>
+                            </div>
+                            <div class="flex pl-10">
+                                <div class="flex">
+                                    <i class="bi bi-file-earmark-arrow-up text-blue-700"></i>
+                                    <button type="button" class="textsize mt-1 ml-2 font-bold" (click)="onUploadDiplomaprovisional(postprovisional)">Re-upload</button>
+                                </div>
+                                <div class="flex pl-2">
+                                    <i class="bi bi-eye text-blue-700"></i>
+                                    <p class="textsize mt-1 ml-2 font-bold text-blue-700 cursor-pointer" (click)="onViewDiplomaprovisional()">View</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+
+            <div class="ml-96 pl-60 mt-2 mb-2">
+                <button type="submit" class="border-1 bg-blue-900 text-white font-semibold rounded-md w-60 h-8">Save Document Summary</button>
+            </div>
+
+            <!-- [disabled]="documentsUpload.invalid"  or  [disabled]="proofOfAgePdf!=null" -->
+
+            <div class="ml-96 pl-60 mt-2 mb-2">
+                <p *ngIf="successMessage!=null" class="text-green-700 font-bold ml-5">{{successMessage}}</p>
+                <p *ngIf="errorMessage!=null" class="text-red-700 font-bold ml-5">{{errorMessage}}</p>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

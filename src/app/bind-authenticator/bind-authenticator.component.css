@@ -1,0 +1,27 @@
+#setBack{
+    height: 737px;
+    background-image: url("../../assets/images/back.png");
+    opacity: 1;
+    background-size: 100% 100%;
+
+}
+
+.fontText{
+    font-size: 40px;
+}
+
+.fontinput{
+    font-size: 12px;
+}
+
+.sso-text {
+    font-size: 35px;
+}
+
+.sso-p-text {
+    font-size: 17px;
+}
+
+.fontBoot {
+    font-size: 3 px;
+}

@@ -1,0 +1,111 @@
+<app-nav-one></app-nav-one>
+<app-nav-two></app-nav-two>
+
+<div class="border-2 mt-5 ml-5 mr-5 helpheight shadow-lg">
+    <div class="bg-blue-100 h-12 pt-3 pl-3 font-semibold">Trainee Help Desk</div>
+    <div class="bg-gray-100 h-9 pl-3 pt-1 font-semibold flex">
+        <p class="cursor-pointer {{viewRequestColor}} {{viewRequestFont}}"  (click)="viewRequest()">View Report</p>
+        <p class="ml-7 cursor-pointer {{addRequestColor}} {{addRequestFont}}"  (click)="addRequest()">Add/View Request</p>
+    </div>
+    <div class="{{addRequestVar}}">
+
+        <form #queryform="ngForm" (ngSubmit)="registerQueryForm(queryform)">
+            <div class="ml-10 mr-10">
+                <div class="flex">
+                    <div class="mt-5 w-3/12">
+                        <div class="flex">
+                            <p class="font-semibold">Category :</p>
+                            <div class="w-1.5 h-1.5 mt-1 ml-1"><img src="assets/images/asteric.png"></div>
+                        </div>
+                        <div class="mt-2">
+                            <select name="category" class="w-64 h-11 border-2 border-gray-400 font-semibold rounded-md" required [(ngModel)]="queryData.category" #category="ngModel">
+                                <option>Accomodation/Transportation Related</option>
+                                <option>Document Upload Related</option>
+                                <option>Eligibility Criteria Related</option>
+                                <option>Joining Date Postponement Request</option>
+                                <option>Joining Date Related</option>
+                                <option>Marksheet Related</option>
+                                <option>Passport/PAN Card/Driving License Related</option>
+                                <option>Training Related</option>
+                            </select>
+
+                            <div *ngIf="category.invalid && (category.dirty || category.touched)" class="text-red-700 font-bold">
+                                <div *ngIf="category.errors?.['required']" class="bg-white/80"> Category is required !!! </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ml-28 mt-5 w-9/12">
+                        <div class="flex">
+                            <p class="font-semibold">Description :</p>
+                            <div class="w-1.5 h-1.5 mt-1 ml-1"><img src="assets/images/asteric.png"></div>
+                        </div>
+
+                        <div class="mt-2">
+                            <textarea name="description" required class="w-full h-24 border-2 border-gray-400 font-semibold pl-2 pt-1 rounded-lg" [(ngModel)]="queryData.description" #description="ngModel">
+                            </textarea>
+                        </div>
+
+                        <div class="font-semibold">(max 500 characters)</div>
+
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="text-red-700 font-bold">
+                            <div *ngIf="description.errors?.['required']" class="bg-white/80"> Description is required !!! </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <p class="font-semibold">Attachment :</p>
+                    <div class="flex h-20 border-dashed border-2 border-black pt-6 pl-6 pr-6 w-full mt-2 bg-gray-100">
+                        <p class="w-2/12 text-blue-800">Drag & drop your file here or </p>
+                        <input type="file" class="w-9/12 text-blue-800 cursor-pointer">
+                        <div class="ml-5">
+                            <button class="w-24 h-9 border-2 bg-blue-900 text-white rounded-md font-semibold">Upload</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex mt-5 font-semibold ml-48">
+                    <p class="w-full text-green-700 ml-96" *ngIf="successMessage!=null">{{successMessage}}</p>
+                    <p class="w-full text-red-700 ml-96" *ngIf="errorMessage!=null">{{errorMessage}}</p>
+                </div>
+
+                <div class="flex justify-center mt-5 font-semibold">
+                    <button type="submit" [disabled]="queryform.form.invalid" class="w-24 h-9 border-2 bg-blue-900 text-white rounded-md">Submit</button>
+                    <button type="button" (click)="cancelRequest(queryform)" class="w-24 h-9 border-2 border-blue-900 text-blue-900 rounded-md ml-10">Cancel</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="{{viewRequestVar}}">
+        <div class="flex m-3">
+            <i class="bi bi-circle-fill fontSize m-2 text-orange-600"></i>
+            <p class="text-blue-800 font-semibold">Click on RequestID to view reply</p>
+        </div>
+        <div class="border-2 m-3 fontHelp font-semibold">
+            <div class="flex w-full bg-blue-50 p-2">
+                <p class="w-2/12">RequestID</p>
+                <p class="w-2/12">Status</p>
+                <p class="w-5/12">Description</p>
+                <p class="w-2/12">Created Date</p>
+                <p class="w-1/12">Action</p>
+            </div>
+            <div *ngFor="let queryDetails of query">
+                <div class="flex w-full p-2" [ngClass]="{'bg-gray-50' : count%2==0}">
+                    <p class="w-2/12 text-blue-700 cursor-pointer" routerLink="reply" [state]="queryDetails">{{queryDetails.id}}</p>
+                    <p class="w-2/12">{{queryDetails.status}}</p>
+                    <p class="w-5/12">{{queryDetails.description}}</p>
+                    <p class="w-2/12">{{queryDetails.queryDate}}</p>
+                    <p class="w-1/12">{{queryDetails.action}}</p>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>

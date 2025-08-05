@@ -54,7 +54,7 @@
         </div>
         <div class="flex">
             <div>
-                <button class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
+                <button (click)="signInWithGoogle()" class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
                     <i class="bi bi-google ml-6"></i>
                     <p class="ml-2">Google</p>
                 </button>
@@ -66,10 +66,10 @@
                 </button>
             </div>
             <div class="ml-12 cursor-pointer">
-                <a (click)="navigateToSSO()" class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
+                <button (click)="navigateToSSO()" class="flex border-2 h-10 w-32 items-center mb-1 rounded-md border-solid border-black hover:bg-blue-900 hover:text-white">
                     <i class="bi bi-key-fill ml-8"></i>
                     <p class="ml-2">SSO</p>
-                </a>
+                </button>
             </div>
         </div>
     </div>

@@ -28,6 +28,8 @@ import { SSOButtonService } from './Service/SSOLoginService/ssobutton.service';
 import { DomainButtonService } from './Service/SSOLoginService/domain-button.service';
 import { EmailButtonService } from './Service/SSOLoginService/email-button.service';
 import { AuthButtonService } from './Service/SSOLoginService/auth-button.service';
+import { ContinueComponent } from './continueWithGoogle/continue/continue.component';
+import { ContinueService } from './Service/ContinueService/continue.service';
 
 const routes: Routes = [
     { path : '' , component : LoginComponent},
@@ -37,6 +39,8 @@ const routes: Routes = [
         { path : 'bind', component : BindAuthenticatorComponent},
         { path : 'verify', component : VerifyAuthenticatorComponent}
     ]},
+
+    { path : 'continue', component : ContinueComponent, canActivate : [ContinueService]},
 
     { path : 'student/pages' , component : MultiStepRegistrationComponent , canActivate : [AuthGuardService]},
     { path : 'student/pages/home' , component : HomeComponent, canActivate : [AuthGuardService]},

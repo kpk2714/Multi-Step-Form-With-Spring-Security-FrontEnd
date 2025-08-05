@@ -35,6 +35,7 @@ import { AuthenticatorVerifyComponent } from './SSO/authenticator-verify/authent
 import { AuthOtpVerifyComponent } from './SSO/auth-otp-verify/auth-otp-verify.component';
 import { BindAuthenticatorComponent } from './bind-authenticator/bind-authenticator.component';
 import { VerifyAuthenticatorComponent } from './verify-authenticator/verify-authenticator.component';
+import { ContinueComponent } from './continueWithGoogle/continue/continue.component';
 
 
 
@@ -67,7 +68,8 @@ import { VerifyAuthenticatorComponent } from './verify-authenticator/verify-auth
     AuthenticatorVerifyComponent,
     AuthOtpVerifyComponent,
     BindAuthenticatorComponent,
-    VerifyAuthenticatorComponent
+    VerifyAuthenticatorComponent,
+    ContinueComponent
   ],
   imports: [
     BrowserModule,

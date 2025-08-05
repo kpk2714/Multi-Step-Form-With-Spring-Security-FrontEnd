@@ -149,4 +149,13 @@ export class LoginComponent implements OnInit {
     
     this.router.navigate(['/sso/domain']);
   }
+
+  signInWithGoogle() {
+
+    const encodedKey = this.utils.encodeByBase64('isGoogleClicked');
+    const encodedValue = this.utils.encodeByBase64('true');
+    this.utils.setSessionItem(encodedKey, encodedValue);
+
+    window.location.href = 'http://localhost:2020/oauth2/authorization/google';
+  }
 }

@@ -1,0 +1,27 @@
+<div class="w-full flex">
+    <div class="w-6/12" id="setBack">
+        <app-front></app-front>
+    </div>
+    <div class="w-6/12 mt-52">
+        <div class="ml-48">
+            <div class="flex mt-10 ml-10 items-center">
+                <img src="../../assets/images/logo.png" class="w-10">
+                <h1 class="font-semibold sso-text font-serif ml-5">SYN Portal</h1>
+            </div>
+            <div class="mt-7 ml-16">
+                <p class="fontText ml-2 font-semibold">Continue With Google</p>
+            </div>
+            <div class="mt-7 w-6/12 ml-8">
+                <form>
+                    <div class="mt-10 w-full">
+                        <button type="button" (click)="verifyContinueWithGoogle()" class="rounded-lg w-full h-10 font-semibold border-2 bg-blue-700 text-white">Continue</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" *ngIf="showLoader">
+    <div class="loader"></div>
+</div>
